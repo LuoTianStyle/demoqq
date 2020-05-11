@@ -61,4 +61,3 @@ export const clearStorage = (type = 1) => {
     window.localStorage.clear()
   }
 }
-

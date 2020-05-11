@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>禁看</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-744.000000, -88.000000)">
+            <g id="禁看" transform="translate(744.000000, 88.000000)">
+                <rect id="矩形" x="0" y="0" width="12" height="12"></rect>
+                <circle id="椭圆形" stroke="#CCCCCC" cx="6" cy="6" r="1.5"></circle>
+                <path d="M5.00221884,9.37690207 C5.32464088,9.45569549 5.65831802,9.5 6,9.5 C8.76142375,9.5 11,6.60519409 11,6 C11,5.75412047 10.6304891,5.13030585 10.0065292,4.47623879 M7.00308761,2.62443861 C6.6790207,2.54480748 6.34355682,2.5 6,2.5 C3.23857625,2.5 1,5.393809 1,6 C1,6.24759341 1.37344882,6.876817 2.00344029,7.53461915" id="形状" stroke="#CCCCCC" stroke-linecap="round" stroke-linejoin="round"></path>
+                <line x1="11" y1="1.0213623" x2="1" y2="11.0300903" id="路径-11" stroke="#CCCCCC" stroke-linecap="round"></line>
+            </g>
+        </g>
+    </g>
+</svg>

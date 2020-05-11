@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>icon_首页</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-752.000000, -219.000000)">
+            <g id="导航" transform="translate(720.000000, 218.000000)">
+                <g id="icon_首页" transform="translate(32.000000, 1.000000)">
+                    <rect id="矩形" x="0" y="0" width="20" height="20"></rect>
+                    <path d="M19,9 L16,9 L16,16.6153846 C16,17.3800866 15.3284271,18 14.5,18 L5.5,18 C4.67157288,18 4,17.3800866 4,16.6153846 L4,9 L1,9" id="路径" stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <polyline id="路径" stroke="#666666" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="1 9 10 2 19 9"></polyline>
+                    <rect id="矩形" fill="#FF8413" x="7" y="12" width="6" height="1.5" rx="0.75"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

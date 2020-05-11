@@ -1,12 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
 Vue.use(VueRouter)
-
 const routes = [
   {
     path: '/login',
     name: 'Login',
+    meta: {
+      name: 'login'
+    },
     component: () => import('../views/Login.vue')
   },
   {
@@ -17,18 +18,18 @@ const routes = [
       {
         path: '/home',
         name: 'Home',
-        icon: 'el-icon-s-home',
+        icon: 'home',
         meta: {
-          name: '首页'
+          name: 'home'
         },
         component: () => import('../views/Home.vue')
       },
       {
         path: '/manage',
         name: 'Manage',
-        icon: 'el-icon-menu',
+        icon: 'account',
         meta: {
-          name: '账号管理'
+          name: 'accountManage'
         },
         component: () => import('../views/Manage.vue')
       },
@@ -36,7 +37,7 @@ const routes = [
         path: '/list:id',
         name: 'List',
         meta: {
-          name: '账号列表'
+          name: 'accountList'
         },
         isShow: false,
         component: () => import('../views/List.vue')

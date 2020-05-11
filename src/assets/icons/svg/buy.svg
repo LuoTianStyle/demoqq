@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>购买</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-979.000000, -293.000000)">
+            <g id="购买" transform="translate(979.000000, 293.000000)">
+                <rect id="矩形" fill-rule="nonzero" x="0" y="0" width="16" height="16"></rect>
+                <polyline id="路径-8" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="1.02001953 1.04699707 3.05348017 1.04699707 5.03408701 10.0244141 15.0200195 10.0244141"></polyline>
+                <polyline id="路径-9" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="4.03918457 3.0357666 15.0200195 3.0357666 14.0340576 7 7.04211426 8"></polyline>
+                <circle id="椭圆形" stroke="#FFFFFF" stroke-width="1.5" cx="6.5" cy="13.5" r="1.5"></circle>
+                <circle id="椭圆形" stroke="#FFFFFF" stroke-width="1.5" cx="12.5" cy="13.5" r="1.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
