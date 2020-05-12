@@ -23,48 +23,7 @@ export default {
   name: 'BuyTable',
   data() {
     return {
-      buyData: [
-        {
-          id: 1,
-          account: 'YG00001',
-          createTime: '2020-02-01',
-          production: '初中物理',
-          expericeTime: '2020-02-01',
-          status: '正常'
-        },
-        {
-          id: 2,
-          account: 'YG00001',
-          createTime: '2020-02-01',
-          production: '初中物理',
-          expericeTime: '2020-02-01',
-          status: '正常'
-        },
-        {
-          id: 3,
-          account: 'YG00002',
-          createTime: '2020-02-01',
-          production: '初中物理',
-          expericeTime: '2020-02-01',
-          status: '正常'
-        },
-        {
-          id: 4,
-          account: 'YG00003',
-          createTime: '2020-02-01',
-          production: '初中物理',
-          expericeTime: '2020-02-01',
-          status: '正常'
-        },
-        {
-          id: 5,
-          account: 'YG00003',
-          createTime: '2020-02-01',
-          production: '初中物理',
-          expericeTime: '2020-02-01',
-          status: '正常'
-        }
-      ]
+      buyData: []
     }
   },
 
@@ -98,6 +57,7 @@ export default {
 }
 .table {
   margin-bottom: 30px;
+  min-width: 928px;
 }
 .item {
   color: #ff8413;

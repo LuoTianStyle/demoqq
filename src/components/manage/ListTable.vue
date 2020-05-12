@@ -13,7 +13,7 @@
       <el-table-column prop="account" :label="$t('username')" />
       <el-table-column prop="createTime" :label="$t('create-time')" />
       <el-table-column prop="production" :label="$t('open-product')" />
-      <el-table-column prop="expericeTime" :label="$t('expriceTime')" />
+      <el-table-column prop="expericeTime" :label="$t('expire-time')" />
       <el-table-column prop="status" :label="$t('status')">
         <template slot-scope="scope">
           <span
@@ -40,28 +40,11 @@
 </template>
 <script>
 export default {
-  name: 'myNeedDeal',
+  name: 'ListTable',
   data() {
     return {
       select: [],
-      listData: [
-        {
-          id: 1,
-          account: 'YG00001',
-          createTime: '2020-02-01',
-          production: '初中物理',
-          expericeTime: '2020-02-01',
-          status: '正常'
-        },
-        {
-          id: 2,
-          account: 'YG00001',
-          createTime: '2020-02-01',
-          production: '初中物理',
-          expericeTime: '2020-02-01',
-          status: '正常'
-        }
-      ]
+      listData: []
     }
   },
 
@@ -91,9 +74,9 @@ export default {
       })
     },
     freezeHandle() {
-      this.$confirm('您确定要封号该账号？封号后登录将显示封号', '封号提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('freeze-tip-content'), this.$t('freeze-tip'), {
+        confirmButtonText: this.$t('sure'),
+        cancelButtonText: this.$t('cancel'),
         type: 'warning'
       })
         .then(() => {})
@@ -125,6 +108,7 @@ export default {
 }
 .table {
   margin-bottom: 30px;
+  min-width: 928px;
 }
 .normal {
   width: 58px;

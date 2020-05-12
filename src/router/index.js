@@ -29,7 +29,7 @@ const routes = [
         name: 'Manage',
         icon: 'account',
         meta: {
-          name: 'accountManage'
+          name: 'account-manage'
         },
         component: () => import('../views/Manage.vue')
       },
@@ -37,7 +37,7 @@ const routes = [
         path: '/list:id',
         name: 'List',
         meta: {
-          name: 'accountList'
+          name: 'account-List'
         },
         isShow: false,
         component: () => import('../views/List.vue')

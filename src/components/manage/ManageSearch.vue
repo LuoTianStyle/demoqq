@@ -1,21 +1,16 @@
 <template>
   <div class="search">
     <el-input
-      placeholder="请输入要搜索的账号"
+      :placeholder="$t('search-input-placehold')"
       clearable
       v-model="input"
       class="search-content"
     >
       <i slot="prefix" class="el-input__icon el-icon-search"></i>
     </el-input>
-    <el-select v-model="value" placeholder="请选择" class="select">
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      >
-      </el-option>
+    <el-select v-model="value" class="select">
+      <el-option :label="$t('create-time')" value="1" />
+      <el-option :label="$t('expire-time1')" value="2" />
     </el-select>
     <el-date-picker
       v-model="startTime"
@@ -52,16 +47,6 @@ export default {
   data() {
     return {
       input: '',
-      options: [
-        {
-          value: '1',
-          label: '创建时间'
-        },
-        {
-          value: '2',
-          label: '到期时间'
-        }
-      ],
       value: '1',
       startTime: '',
       endTime: ''
@@ -72,8 +57,10 @@ export default {
 <style lang="less" scoped>
 /deep/.el-input__inner {
   border-color: transparent;
+  color: #999;
 }
 .search {
+  min-width: 928px;
   margin-bottom: 24px;
   position: relative;
   .data-item {
@@ -82,11 +69,11 @@ export default {
     margin-right: 12px;
   }
   .search-content {
-    width: 200px;
+    width: 225px;
     margin-right: 12px;
   }
   .select {
-    width: 120px;
+    width: 130px;
     margin-right: 12px;
   }
   .put {
@@ -99,6 +86,13 @@ export default {
       margin-right: 5px;
     }
   }
+  @media screen and (max-width: 1560px) {
+    .put {
+      position: static;
+      margin-top: 24px;
+    }
+  }
+
   .search-btn {
     color: #ff8413;
     border-color: transparent;

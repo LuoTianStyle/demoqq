@@ -1,5 +1,5 @@
 <template>
-  <el-dropdown @command="clickHandle" trigger="click" :hide-on-click="false">
+  <el-dropdown @command="clickHandle" trigger="click">
     <span class="el-dropdown-link">
       <img class="avatar" src="@/assets/imgs/logo-small.png" alt="" />
       {{ name }}
@@ -15,30 +15,40 @@
         {{ $t('exit') }}
       </el-dropdown-item>
     </el-dropdown-menu>
+    <pass-modal
+      :show.sync="modalShow"
+      v-if="modalShow"
+      :title="$t('pass-change')"
+    />
   </el-dropdown>
 </template>
 <script>
+import PassModal from '@/components/modal/PassModal.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 export default {
   name: 'InfoSet',
   data() {
     return {
-      name: 'Lucy'
+      name: 'Lucy',
+      modalShow: false
     }
   },
   components: {
-    SvgIcon
+    SvgIcon,
+    PassModal
   },
   methods: {
     clickHandle(e) {
       if (e === 'exit') {
-        this.$confirm('你是否要退出登录, 是否继续?', '退出', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm(this.$t('exit-tip'), this.$t('exit'), {
+          confirmButtonText: this.$t('sure'),
+          cancelButtonText: this.$t('cancel'),
           type: 'warning'
         })
           .then(() => {})
           .catch(() => {})
+      } else {
+        this.modalShow = true
       }
     }
   }
@@ -58,7 +68,7 @@ export default {
 .item {
   padding-left: 6px;
   padding-right: 6px;
-  width: 124px;
+  width: 160px;
   box-sizing: border-box;
 
   &:hover {

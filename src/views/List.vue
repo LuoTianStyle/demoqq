@@ -1,8 +1,8 @@
 <template>
   <div class="list">
-    <div class="list">账号列表</div>
+    <div class="list" v-text="$t('account-list')" />
     <div class="return" @click="routerTo">
-      返回<i class="el-icon-arrow-right el-icon--right"></i>
+      {{ $t('return') }}<i class="el-icon-arrow-right el-icon--right"></i>
     </div>
     <div class="list-line">
       <div class="list-line-active"></div>

@@ -33,10 +33,12 @@ export default {
 <style lang="less" scoped>
 /deep/.el-input__inner {
   border-color: transparent;
+  color: #999;
 }
 .search {
   margin-bottom: 24px;
   position: relative;
+  min-width: 928px;
   .data-item {
     cursor: pointer;
     width: 150px;

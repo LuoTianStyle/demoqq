@@ -3,7 +3,7 @@
     <div class="header">
       <div class="left">
         <div class="cost">
-          <div class="text">消费累计</div>
+          <div class="text" v-text="$t('cost-total')" />
           <div class="number">{{ number }}</div>
         </div>
         <div class="cost-img">
@@ -12,11 +12,11 @@
       </div>
       <div class="buy">
         <div class="context">
-          <div class="welcome">欢迎使用</div>
-          <div class="here">NOBOOK海外代理商管理后台</div>
-          <el-button type="primary" class="to-buy">
+          <div class="welcome" v-text="$t('welcome')" />
+          <div class="here" v-text="$t('come-to')" />
+          <el-button type="primary" class="to-buy" @click="modalShow = true">
             <svg-icon icon-class="buy" class="buy-icon" />
-            购买账号
+            {{ $t('buy-account') }}
           </el-button>
         </div>
         <div class="buy-img">
@@ -24,17 +24,23 @@
         </div>
       </div>
     </div>
-    <div class="buy-record">购买记录</div>
+    <div class="buy-record" v-text="$t('buy-record')" />
     <div class="buy-record-line">
       <div class="buy-record-line-active"></div>
     </div>
     <home-search />
     <buy-table />
     <pagination-bar />
+    <buy-modal
+      :show.sync="modalShow"
+      v-if="modalShow"
+      :title="$t('buy-account')"
+    />
   </div>
 </template>
 <script>
 import HomeSearch from '@/components/home/HomeSearch'
+import BuyModal from '@/components/modal/BuyModal'
 import BuyTable from '@/components/home/BuyTable'
 import PaginationBar from '@/components/PaginationBar'
 import SvgIcon from '@/components/SvgIcon'
@@ -44,10 +50,12 @@ export default {
     BuyTable,
     HomeSearch,
     PaginationBar,
-    SvgIcon
+    SvgIcon,
+    BuyModal
   },
   data() {
     return {
+      modalShow: false,
       number: '￡2555.00'
     }
   }
@@ -58,7 +66,7 @@ export default {
   .header {
     display: flex;
     .left {
-      min-width: 380px;
+      min-width: 445px;
       margin-top: 15px;
       margin-right: 32px;
       display: flex;
@@ -95,7 +103,7 @@ export default {
       }
     }
     .buy {
-      min-width: 592px;
+      min-width: 475px;
       position: relative;
       flex: 1;
       display: flex;
@@ -121,7 +129,7 @@ export default {
         }
         .to-buy {
           margin-top: 24px;
-          width: 128px;
+          width: 140px;
           height: 40px;
           line-height: 40px;
           padding: 0;

@@ -227,7 +227,7 @@ export default {
       height: 500px;
       background: rgb(255, 255, 255);
       border-radius: 12px 0px 0px 12px;
-      padding: 74px 48px 0 48px;
+      padding: 74px 0 0 48px;
       box-sizing: border-box;
       .title {
         font-size: 24px;
@@ -245,7 +245,7 @@ export default {
       }
       .login-line {
         position: relative;
-        width: 100%;
+        width: calc(100% - 48px);
         height: 2px;
         background: rgb(230, 230, 230);
         border-radius: 2px;
@@ -262,6 +262,7 @@ export default {
       }
       .item {
         margin-bottom: 12px;
+        margin-right: 48px;
         input {
           height: 44px;
           background: rgba(246, 249, 253, 1);

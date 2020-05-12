@@ -1,6 +1,6 @@
 <template>
   <div class="manage">
-    <div class="buy-record">账号管理</div>
+    <div class="buy-record" v-text="$t('account-manage')"></div>
     <div class="buy-record-line">
       <div class="buy-record-line-active"></div>
     </div>
