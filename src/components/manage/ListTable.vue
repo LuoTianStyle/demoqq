@@ -1,7 +1,7 @@
 <template>
   <div class="table">
     <el-table
-      :data="listData"
+      :data="tableData"
       @selection-change="handleSelectionChange"
       :row-class-name="tableRowClassName"
     >
@@ -10,29 +10,61 @@
         width="55"
         v-if="$route.path === '/manage'"
       />
-      <el-table-column prop="account" :label="$t('username')" />
-      <el-table-column prop="createTime" :label="$t('create-time')" />
-      <el-table-column prop="production" :label="$t('open-product')" />
-      <el-table-column prop="expericeTime" :label="$t('expire-time')" />
-      <el-table-column prop="status" :label="$t('status')">
+      <el-table-column
+        prop="username"
+        :label="$t('username')"
+        min-width="130"
+      />
+      <el-table-column
+        prop="createAt"
+        :label="$t('create-time')"
+        min-width="115"
+      />
+      <el-table-column :label="$t('open-product')" min-width="140">
+        <template slot-scope="scope">
+          <div
+            v-for="item in scope.row.userVip"
+            :key="item.id"
+            v-text="item.productName"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('expire-time')" min-width="130">
+        <template slot-scope="scope">
+          <div
+            v-for="item in scope.row.userVip"
+            :key="item.id"
+            v-text="item.vipEndTime"
+          />
+        </template>
+      </el-table-column>
+      <el-table-column :label="$t('status')" min-width="100">
         <template slot-scope="scope">
           <span
-            v-if="scope.row.id === 1"
+            v-if="scope.row.status === 0"
             class="normal"
             v-text="$t('normal')"
           />
           <span v-else class="freeze" v-text="$t('freeze')" />
         </template>
       </el-table-column>
-      <el-table-column :label="$t('do')">
+      <el-table-column :label="$t('do')" min-width="255">
         <template slot-scope="scope">
           <span
-            @click="routerTo(scope.row.id)"
+            @click="rechargeHandle(scope.row.username)"
             class="item"
             v-text="$t('recharge')"
           />
-          <span class=" item" v-text="$t('freeze')" @click="freezeHandle" />
-          <span class="pass-change item" v-text="$t('pass-change')" />
+          <span
+            :class="scope.row.status === 0 ? 'item' : 'item unfreeze'"
+            v-text="scope.row.status === 0 ? $t('freeze') : $t('un-freeze')"
+            @click="freezeHandle(scope.row.id, scope.row.status)"
+          />
+          <span
+            class="pass-change item"
+            v-text="$t('reset-pass')"
+            @click="resetPass(scope.row.id)"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -41,46 +73,64 @@
 <script>
 export default {
   name: 'ListTable',
+  props: {
+    tableData: Array
+  },
   data() {
     return {
       select: [],
-      listData: []
+      username: []
     }
   },
 
   methods: {
+    // 表格选中
     tableRowClassName(obj) {
       if (this.select.indexOf(obj.rowIndex) !== -1) {
         return 'warning-row'
       }
       return ''
     },
-    routerTo(e) {
-      this.$router.push({
-        name: 'List',
-        params: {
-          id: e
-        }
-      })
-    },
+
+    // 表格选中
     handleSelectionChange(val) {
       this.select = []
-      this.listData.forEach((item, index) => {
+      this.username = []
+      this.tableData.forEach(item => {
         val.forEach(itemIn => {
           if (itemIn.id === item.id) {
-            this.select.push(index)
+            this.select.push(item.id)
+            this.username.push(item.username)
           }
         })
       })
+      this.$emit('selectHandle', this.select, this.username)
     },
-    freezeHandle() {
-      this.$confirm(this.$t('freeze-tip-content'), this.$t('freeze-tip'), {
+    // 续购
+    rechargeHandle(e) {
+      this.$emit('rechargeHandle', [e])
+    },
+    // 封号
+    freezeHandle(id, status) {
+      const text =
+        status === 0
+          ? this.$t('freeze-tip-content')
+          : this.$t('freeze-tip2-content')
+      const tip = status === 0 ? this.$t('freeze-tip') : this.$t('freeze-tip1')
+      this.$confirm(text, tip, {
         confirmButtonText: this.$t('sure'),
         cancelButtonText: this.$t('cancel'),
         type: 'warning'
       })
-        .then(() => {})
+        .then(() => {
+          const st = status === 1 ? 0 : 1
+          this.$emit('freezeHandle', [id], st)
+        })
         .catch(() => {})
+    },
+    // 重置密码
+    resetPass(id) {
+      this.$emit('resetPass', [id])
     }
   }
 }
@@ -135,7 +185,10 @@ export default {
 .item {
   color: #ff8413;
   cursor: pointer;
-  margin-right: 10px;
+  margin-right: 15px;
+  &.unfreeze {
+    color: rgba(33, 158, 108, 1);
+  }
   &.pass-change {
     margin-right: 0;
   }

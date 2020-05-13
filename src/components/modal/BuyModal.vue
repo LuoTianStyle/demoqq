@@ -13,7 +13,10 @@
       <div class="buy-record-line">
         <div class="buy-record-line-active"></div>
       </div>
-      <el-form-item prop="number" class="item">
+      <el-form-item class="item" v-if="usernameArr">
+        <el-input v-model="ids" disabled />
+      </el-form-item>
+      <el-form-item prop="number" class="item" v-if="!usernameArr">
         <el-input
           :placeholder="$t('buy-number-required')"
           v-model.number="form.number"
@@ -28,14 +31,18 @@
         />
       </el-form-item>
       <el-form-item prop="product" class="item">
-        <el-select v-model="form.product">
-          <el-option label="1" value="1"></el-option>
-          <el-option label="2" value="2"></el-option>
+        <el-select v-model="form.product" value-key="id">
+          <el-option
+            v-for="item in product"
+            :key="item.id"
+            :label="item.name"
+            :value="item"
+          />
         </el-select>
       </el-form-item>
       <div class="item total">
         <span class="text" v-text="$t('total')" />
-        <span class="number" v-text="number" />
+        <span class="number">{{ unit }}{{ number }}</span>
       </div>
       <el-form-item class="submit">
         <el-button
@@ -46,58 +53,155 @@
         />
       </el-form-item>
     </el-form>
+    <result-modal :show.sync="resultShow" v-if="resultShow" />
   </el-dialog>
 </template>
 <script>
+import { createOrder, getProduct, createRenew } from '@/api'
+import { getStorage } from '@/utils/storage'
+import ResultModal from './ResultModal'
 export default {
   name: 'BuyModal',
-
   props: {
     show: Boolean,
-    title: String
+    title: String,
+    usernameArr: Array
+  },
+  components: {
+    ResultModal
   },
   data() {
+    const checkNumber = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(this.$t('buy-number-required')))
+      } else if (!value) {
+        callback(new Error(this.$t('buy-number-rule')))
+      } else {
+        callback()
+      }
+    }
+    const checkYear = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(this.$t('buy-year-required')))
+      } else if (!value) {
+        callback(new Error(this.$t('buy-year-rule')))
+      } else {
+        callback()
+      }
+    }
     return {
-      number: '￡2555.00',
+      resultShow: false,
+      price: 0,
+      unit: '',
+      product: [],
+      ids: '',
+      idLength: 1,
       form: {
         number: '',
         year: '',
-        product: '1'
+        product: {}
       },
       rules: {
         number: [
           {
-            required: true,
-            message: this.$t('buy-number-required'),
+            type: 'number',
+            message: this.$t('buy-number-rule'),
             trigger: 'blur'
           },
           {
-            type: 'number',
-            message: this.$t('buy-number-rule'),
+            validator: checkNumber,
             trigger: 'blur'
           }
         ],
         year: [
           {
-            required: true,
-            message: this.$t('buy-year-required'),
+            type: 'number',
+            message: this.$t('buy-year-rule'),
             trigger: 'blur'
           },
           {
-            type: 'number',
-            message: this.$t('buy-year-rule'),
+            validator: checkYear,
             trigger: 'blur'
           }
         ]
       }
     }
   },
+  computed: {
+    number() {
+      return this.form.number * this.form.year * this.price
+    }
+  },
+  watch: {
+    usernameArr: {
+      handler() {
+        if (this.usernameArr) {
+          this.ids = this.usernameArr.join(',')
+          this.form.number = this.usernameArr.length
+        }
+      },
+      deep: true
+    },
+    'form.product': {
+      handler() {
+        this.price = this.form.product.price
+      },
+      deep: true
+    }
+  },
   methods: {
     cancelModal() {
       this.$emit('update:show', false)
     },
-    submitForm() {
-      this.$emit('submit', this.pass)
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          if (this.usernameArr) {
+            this.createOrderThen()
+            return
+          }
+          this.createOrder()
+        } else {
+          return false
+        }
+      })
+    },
+    async createOrder() {
+      const parmas = {
+        times: this.form.year,
+        num: this.form.number,
+        productId: this.form.product.id
+      }
+      const res = await createOrder(parmas)
+      console.log(res)
+      // this.resultShow = true
+    },
+    async createOrderThen() {
+      const parmas = {
+        times: this.form.year,
+        usernameArr: this.usernameArr,
+        productId: this.form.product.id
+      }
+      const res = await createRenew(parmas)
+      console.log(res)
+      // this.resultShow = true
+    },
+    async getList() {
+      if (!this.$store.state.product.length) {
+        const res = await getProduct()
+        this.$store.commit('setProduct', res.data)
+      }
+      this.product = this.$store.state.product
+      this.form.product = this.product[0]
+      this.price = this.form.product.price
+    }
+  },
+  mounted() {
+    this.unit = getStorage('userData').unit
+    this.getList()
+    if (this.usernameArr) {
+      this.ids = this.usernameArr.join(',')
+      this.form.number = this.usernameArr.length
     }
   }
 }

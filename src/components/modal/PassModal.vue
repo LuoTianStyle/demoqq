@@ -49,9 +49,23 @@ export default {
   },
   props: {
     show: Boolean,
-    title: String
+    title: String,
+    passIds: Array
   },
   data() {
+    const validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(this.$t('password-is-required')))
+      } else if (
+        !/^[0-9a-zA-Z]+$/.test(value) ||
+        value.length < 5 ||
+        value.length > 13
+      ) {
+        callback(new Error(this.$t('password-is-wrong')))
+      } else {
+        callback()
+      }
+    }
     return {
       passShow: false,
       form: {
@@ -60,8 +74,7 @@ export default {
       rules: {
         pass: [
           {
-            required: true,
-            message: this.$t('password-is-required'),
+            validator: validatePass,
             trigger: 'blur'
           }
         ]
@@ -76,8 +89,14 @@ export default {
     cancelModal() {
       this.$emit('update:show', false)
     },
-    submitForm() {
-      this.$emit('submit', this.pass)
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.$emit('submitPass', this.form.pass)
+        } else {
+          return false
+        }
+      })
     }
   }
 }

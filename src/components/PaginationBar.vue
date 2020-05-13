@@ -3,12 +3,12 @@
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[10, 20, 50, 100]"
+      :current-page="pagination.page"
+      :page-sizes="[1, 10, 20, 50, 100]"
       background
-      :page-size="10"
+      :page-size="pagination.perPage"
       layout="total, prev, pager, next, sizes"
-      :total="400"
+      :total="pagination.total"
     >
     </el-pagination>
   </div>
@@ -16,18 +16,21 @@
 <script>
 export default {
   name: 'PaginationBar',
-  data() {
-    return {
-      currentPage4: 4
-    }
+  props: {
+    pagination: Object
   },
-
   methods: {
     handleSizeChange(val) {
-      console.log(val)
+      this.$emit('changePagination', {
+        page: 1,
+        perPage: val
+      })
     },
     handleCurrentChange(val) {
-      console.log(val)
+      this.$emit('changePagination', {
+        page: val,
+        perPage: this.pagination.perPage
+      })
     }
   }
 }
@@ -35,7 +38,6 @@ export default {
 <style lang="less" scoped>
 .pagination {
   text-align: right;
-
   /deep/ .el-pagination {
     .el-pager {
       li {

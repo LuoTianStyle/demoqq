@@ -178,6 +178,7 @@ export default {
     }
   }
   .header {
+    z-index: 10;
     height: 112px !important;
     transition: all 0.3s;
     position: relative;

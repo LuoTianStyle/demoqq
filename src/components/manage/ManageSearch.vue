@@ -3,38 +3,60 @@
     <el-input
       :placeholder="$t('search-input-placehold')"
       clearable
-      v-model="input"
+      v-model="username"
       class="search-content"
     >
       <i slot="prefix" class="el-input__icon el-icon-search"></i>
     </el-input>
-    <el-select v-model="value" class="select">
-      <el-option :label="$t('create-time')" value="1" />
-      <el-option :label="$t('expire-time1')" value="2" />
+    <el-select v-model="timeCategory" class="select">
+      <el-option :label="$t('create-time')" value="0" />
+      <el-option :label="$t('expire-time1')" value="1" />
     </el-select>
     <el-date-picker
-      v-model="startTime"
+      v-model="beginTime"
       type="date"
       :placeholder="$t('search-time-start')"
       class="data-item"
+      value-format="timestamp"
     />
     <el-date-picker
       v-model="endTime"
       type="date"
       :placeholder="$t('search-time-end')"
       class="data-item"
+      value-format="timestamp"
     />
-    <el-button class="search-btn" size="medium" v-text="$t('search-btn')" />
+    <el-button
+      class="search-btn"
+      size="medium"
+      v-text="$t('search-btn')"
+      @click="searchHandle"
+    />
     <div class="put">
-      <el-button type="primary" size="medium">
+      <el-button
+        type="primary"
+        size="medium"
+        :disabled="select.length > 0 ? false : true"
+        @click="rechargeHandle"
+      >
         <svg-icon icon-class="recharge" class="icon" />
         {{ $t('recharge') }}
       </el-button>
-      <el-button type="primary" size="medium">
+      <el-button
+        type="primary"
+        size="medium"
+        :disabled="select.length > 0 ? false : true"
+        @click="freezeHandle"
+      >
         <svg-icon icon-class="freeze" class="icon" />
         {{ $t('freeze') }}
       </el-button>
-      <el-button type="primary" size="medium">
+      <el-button
+        :disabled="select.length > 0 ? false : true"
+        type="primary"
+        size="medium"
+        @click="resetPass"
+      >
         <svg-icon icon-class="reset-pass" class="icon" />
         {{ $t('reset-pass') }}
       </el-button>
@@ -44,12 +66,54 @@
 <script>
 export default {
   name: 'HomeSearcch',
+  props: {
+    select: Array,
+    usernameArr: Array
+  },
   data() {
     return {
-      input: '',
-      value: '1',
-      startTime: '',
+      username: '',
+      timeCategory: '0',
+      beginTime: '',
       endTime: ''
+    }
+  },
+  methods: {
+    // 搜索
+    searchHandle() {
+      const param = {
+        timeCategory: parseInt(this.timeCategory),
+        beginTime: '',
+        endTime: '',
+        username: this.username
+      }
+      if (this.beginTime) {
+        param.beginTime = parseInt(String(this.beginTime).slice(0, 10))
+      }
+      if (this.endTime) {
+        param.endTime = parseInt(String(this.endTime).slice(0, 10))
+      }
+      this.$emit('searchHandle', param)
+    },
+    // 续购
+    rechargeHandle() {
+      this.$emit('rechargeHandle', this.usernameArr)
+    },
+    // 封号
+    freezeHandle() {
+      this.$confirm(this.$t('freeze-tip-content'), this.$t('freeze-tip'), {
+        confirmButtonText: this.$t('sure'),
+        cancelButtonText: this.$t('cancel'),
+        type: 'warning'
+      })
+        .then(() => {
+          this.$emit('freezeHandle', this.select, 1)
+        })
+        .catch(() => {})
+    },
+    // 重置密码
+    resetPass() {
+      this.$emit('resetPass', this.select)
     }
   }
 }

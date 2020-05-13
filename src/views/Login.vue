@@ -58,6 +58,9 @@
 </template>
 
 <script>
+import { login } from '@/api'
+import md5 from 'js-md5'
+import { currency } from '@/utils/currency'
 import { setStorage } from '@/utils/storage.js'
 import SvgIcon from '@/components/SvgIcon'
 import LangHeader from '@/components/LangHeader'
@@ -100,15 +103,32 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          setStorage('userData', {
-            name: 'tian',
-            password: '123456'
-          })
-          this.$router.push('/home')
+          this.login()
         } else {
           return false
         }
       })
+    },
+    // 登录
+    async login() {
+      const params = {
+        username: this.loginForm.username,
+        password: md5(this.loginForm.password)
+      }
+      const res = await login(params)
+      if (res) {
+        this.$message({
+          message: this.$t('do-success'),
+          type: 'success'
+        })
+        res.data.unit = currency('GBP')
+        setStorage('userData', res.data)
+        let timer = setTimeout(() => {
+          this.$router.push('/home')
+          clearTimeout(timer)
+          timer = null
+        }, 500)
+      }
     }
   }
 }

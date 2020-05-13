@@ -1,6 +1,6 @@
 const path = require('path')
 const resolve = dir => path.join(__dirname, dir)
-console.log(this)
+
 const Timestamp = new Date().getTime()
 module.exports = {
   configureWebpack: {
@@ -52,12 +52,12 @@ module.exports = {
   },
   devServer: {
     proxy: {
-      '/api': {
-        target: 'http://admin.nobook.cc/',
+      '/api_back': {
+        target: 'http://britainagent.nobook.cc',
         changeOrigin: true,
         ws: true,
         pathRewrite: {
-          '^/api': ''
+          '^/api_back': ''
         }
       }
     }

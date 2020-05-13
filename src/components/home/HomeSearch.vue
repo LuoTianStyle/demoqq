@@ -5,15 +5,22 @@
       type="date"
       :placeholder="$t('search-time-start')"
       class="data-item"
+      value-format="timestamp"
     />
     <el-date-picker
       v-model="endTime"
       type="date"
       :placeholder="$t('search-time-end')"
       class="data-item"
+      value-format="timestamp"
     />
-    <el-button class="search-btn" size="medium" v-text="$t('search-btn')" />
-    <el-button type="primary" size="medium" class="put">
+    <el-button
+      class="search-btn"
+      size="medium"
+      v-text="$t('search-btn')"
+      @click="searchHandle"
+    />
+    <el-button type="primary" size="medium" class="put" @click="putList">
       <svg-icon icon-class="put" class="icon" />
       {{ $t('put-data') }}
     </el-button>
@@ -26,6 +33,26 @@ export default {
     return {
       startTime: '',
       endTime: ''
+    }
+  },
+  methods: {
+    // 搜索
+    searchHandle() {
+      const param = {
+        startTime: this.startTime,
+        endTime: this.endTime
+      }
+      if (this.startTime) {
+        param.beginTime = parseInt(String(this.startTime).slice(0, 10))
+      }
+      if (this.endTime) {
+        param.endTime = parseInt(String(this.endTime).slice(0, 10))
+      }
+      this.$emit('searchHandle', param)
+    },
+    // 导出
+    putList() {
+      this.$emit('putList', 1)
     }
   }
 }

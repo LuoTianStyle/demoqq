@@ -28,9 +28,12 @@
     <div class="buy-record-line">
       <div class="buy-record-line-active"></div>
     </div>
-    <home-search />
-    <buy-table />
-    <pagination-bar />
+    <home-search @searchHandle="searchHandle" @putList="putList" />
+    <buy-table :tableData="tableData" @putList="putList" />
+    <pagination-bar
+      :pagination="pagination"
+      @changePagination="changePagination"
+    />
     <buy-modal
       :show.sync="modalShow"
       v-if="modalShow"
@@ -39,11 +42,14 @@
   </div>
 </template>
 <script>
+import { getOrder, getPutList, getPutAccount } from '@/api'
+import { getStorage } from '@/utils/storage'
 import HomeSearch from '@/components/home/HomeSearch'
 import BuyModal from '@/components/modal/BuyModal'
 import BuyTable from '@/components/home/BuyTable'
 import PaginationBar from '@/components/PaginationBar'
 import SvgIcon from '@/components/SvgIcon'
+import path from '@/utils/path'
 export default {
   name: 'Home',
   components: {
@@ -55,9 +61,88 @@ export default {
   },
   data() {
     return {
+      url: '',
       modalShow: false,
-      number: '￡2555.00'
+      number: '￡2555.00',
+      tableData: [],
+      pagination: {
+        total: 0,
+        page: 1,
+        perPage: 10
+      },
+      time: {
+        beginTime: 0,
+        endTime: 0
+      }
     }
+  },
+  methods: {
+    // 导出
+    async putList(e, id, category) {
+      if (process.env.NODE_ENV === 'production') {
+        if (process.env.VUE_APP_CURRENTMODE === 'production') {
+          this.url = path.com
+        } else {
+          this.url = path.cc
+        }
+      } else {
+        this.url = path.cc
+      }
+
+      if (e === 1) {
+        const params = {}
+        if (this.time.beginTime) {
+          params.beginTime = this.time.beginTime
+        }
+        if (this.time.endTime) {
+          params.endTime = this.time.endTime
+        }
+        const res = await getPutList(params)
+        window.open(res.data.fileUrl)
+      } else {
+        const params = {
+          orderId: id,
+          orderCategory: category
+        }
+        const res = await getPutAccount(params)
+        window.open(res.data.fileUrl)
+      }
+    },
+    // 获取数据
+    async getList() {
+      const params = {
+        page: this.pagination.page,
+        perPage: this.pagination.perPage
+      }
+      if (this.time.beginTime) {
+        params.beginTime = this.time.beginTime
+      }
+      if (this.time.endTime) {
+        params.endTime = this.time.endTime
+      }
+      const res = await getOrder(params)
+      this.tableData = res.data.data.map(item => {
+        item.money = getStorage('userData').unit + item.money
+        return item
+      })
+      this.pagination.total = res.data.total
+    },
+    // 搜索
+    searchHandle(e) {
+      this.pagination.page = 1
+      this.time.beginTime = e.beginTime
+      this.time.endTime = e.endTime
+      this.getList()
+    },
+    // 分页变换
+    changePagination(e) {
+      this.pagination.page = e.page
+      this.pagination.perPage = e.perPage
+      this.getList()
+    }
+  },
+  mounted() {
+    this.getList()
   }
 }
 </script>
@@ -129,10 +214,9 @@ export default {
         }
         .to-buy {
           margin-top: 24px;
-          width: 140px;
           height: 40px;
           line-height: 40px;
-          padding: 0;
+          padding: 0 10px;
           font-size: 18px;
           font-weight: 300;
           border-radius: 12px;
@@ -146,7 +230,7 @@ export default {
       .buy-img {
         position: absolute;
         top: -15px;
-        right: 50px;
+        right: 10%;
         img {
           width: 249px;
         }

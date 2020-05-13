@@ -1,16 +1,17 @@
 'use strict'
 import axios from 'axios'
-import { Loading } from 'element-ui'
+import { Loading, Message } from 'element-ui'
 import { getStorage } from '@/utils/storage.js'
+import url from '@/utils/path.js'
 let config = {
-  timeout: 5 * 1000
+  timeout: 5 * 10000
 }
 let loadingCount = 0
 let loading
 const startLoading = () => {
   loading = Loading.service({
     lock: true,
-    text: '加载中……',
+    text: 'loading',
     background: 'rgba(0, 0, 0, 0.7)',
     spinner: 'el-icon-loading'
   })
@@ -38,7 +39,10 @@ const _axios = axios.create(config)
 
 _axios.interceptors.request.use(
   function(config) {
-    showLoading()
+    if (config.showLoading) {
+      showLoading()
+    }
+    config.headers.common['authorizationType'] = 'web'
     if (getStorage('userData') && getStorage('userData') !== '') {
       config.headers.common['token'] = getStorage('userData').token
     }
@@ -46,8 +50,8 @@ _axios.interceptors.request.use(
       let str = config.url.replace('/api/', '/')
       config.url =
         process.env.VUE_APP_CURRENTMODE === 'production'
-          ? 'https://adminapi.nobook.com' + str
-          : 'http://admin.nobook.cc' + str
+          ? url.cc + str
+          : url.com + str
     }
     return config
   },
@@ -95,7 +99,17 @@ export function get(url, params = {}, config = { showLoading: true }) {
         showLoading: config.showLoading
       })
       .then(response => {
-        resolve(response.data)
+        if (response.data) {
+          const data = response.data
+          if (data.code === 0) {
+            resolve(data)
+          } else {
+            Message.warning(data.msg)
+            return
+          }
+        } else {
+          resolve(response)
+        }
       })
       .catch(err => {
         reject(err)
@@ -108,7 +122,17 @@ export function post(url, data = {}, config = { showLoading: true }) {
     _axios
       .post(url, data, config)
       .then(response => {
-        resolve(response.data)
+        if (response.data) {
+          const data = response.data
+          if (data.code === 0) {
+            resolve(data)
+          } else {
+            Message.warning(data.msg)
+            return
+          }
+        } else {
+          resolve(response)
+        }
       })
       .catch(err => {
         reject(err)

@@ -18,6 +18,7 @@ const zhTW = {
   exit: '退出',
   'exit-tip': '你是否要退出登錄, 是否繼續?',
   return: '返回',
+  'do-success': '操作成功',
   // 登录页
   username: '賬號',
   password: '密碼',
@@ -25,6 +26,7 @@ const zhTW = {
   'username-is-required': '賬號不能為空',
   'password-placehold': '請輸入您的密碼',
   'password-is-required': '密碼不能為空',
+  'password-is-wrong': '密碼輸入格式有誤，請輸入5至13位的數字字母組合',
   'login-submit': '登錄',
   title: '海外代理商後臺',
   'account-login': '賬號登錄',
@@ -41,8 +43,13 @@ const zhTW = {
   // manage
   recharge: '續費',
   freeze: '封號',
+  'un-freeze': '解封',
   'freeze-tip': '封號提示',
   'freeze-tip-content': '您確定要封號該賬號？封號後登錄將顯示封號',
+  'freeze-tip1': '解封提示',
+  'freeze-tip1-content': '您確定要封號选中账号？封號後登錄將顯示封號',
+  'freeze-tip2-content': '您確定要解封該賬號？解封後賬號可登錄',
+  'buy-account-second': '續費',
   'reset-pass': '重置密碼',
   'create-time': '創建時間',
   'open-product': '開通產品',
@@ -59,6 +66,10 @@ const zhTW = {
   'buy-number-rule': '購買數量為大於0的整數',
   'buy-year-required': '請輸入購買時長/年',
   'buy-year-rule': '購買時長/年為大於0的整數',
+  'success-result': '支付成功！',
+  'success-result-btn': '立即導出賬號',
+  'failure-result': '支付失敗！',
+  'failure-result-btn': '重新支付',
   // elementUI
   ...zhTWLocale
 }

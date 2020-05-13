@@ -34,7 +34,7 @@ const routes = [
         component: () => import('../views/Manage.vue')
       },
       {
-        path: '/list:id',
+        path: '/list:id:category',
         name: 'List',
         meta: {
           name: 'account-List'

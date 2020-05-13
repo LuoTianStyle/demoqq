@@ -1,18 +1,30 @@
 <template>
   <div class="table">
-    <el-table :data="buyData">
-      <el-table-column prop="account" :label="$t('account-no')" />
-      <el-table-column prop="createTime" :label="$t('account-number')" />
-      <el-table-column prop="production" :label="$t('buy-product')" />
-      <el-table-column prop="expericeTime" :label="$t('buy-cost')" />
-      <el-table-column :label="$t('do')">
+    <el-table :data="tableData">
+      <el-table-column min-width="248" prop="sn" :label="$t('account-no')" />
+      <el-table-column
+        min-width="145"
+        prop="num"
+        :label="$t('account-number')"
+      />
+      <el-table-column
+        min-width="185"
+        prop="productName"
+        :label="$t('buy-product')"
+      />
+      <el-table-column min-width="165" prop="money" :label="$t('buy-cost')" />
+      <el-table-column min-width="185" :label="$t('do')">
         <template slot-scope="scope">
           <span
-            @click="routerTo(scope.row.id)"
+            @click="routerTo(scope.row.id, scope.row.category)"
             class="accout-list item"
             v-text="$t('account-list')"
           />
-          <span class="put-data item" v-text="$t('put-data')" />
+          <span
+            class="put-data item"
+            v-text="$t('put-data')"
+            @click="putList(scope.row.id, scope.row.category)"
+          />
         </template>
       </el-table-column>
     </el-table>
@@ -21,18 +33,21 @@
 <script>
 export default {
   name: 'BuyTable',
-  data() {
-    return {
-      buyData: []
-    }
+  props: {
+    tableData: Array
   },
-
   methods: {
-    routerTo(e) {
+    // 导出
+    putList(id, category) {
+      this.$emit('putList', 2, id, category)
+    },
+    // 账号列表
+    routerTo(id, category) {
       this.$router.push({
         name: 'List',
         params: {
-          id: e
+          id,
+          category
         }
       })
     }

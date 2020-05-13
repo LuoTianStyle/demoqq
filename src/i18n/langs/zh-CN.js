@@ -18,6 +18,7 @@ const zhCn = {
   exit: '退出',
   'exit-tip': '你是否要退出登录, 是否继续?',
   return: '返回',
+  'do-success': '操作成功',
   // 登录页
   username: '账号',
   password: '密码',
@@ -25,6 +26,7 @@ const zhCn = {
   'username-is-required': '账号不能为空',
   'password-placehold': '请输入您的密码',
   'password-is-required': '密码不能为空',
+  'password-is-wrong': '密码输入格式有误，请输入5至13位的数字字母组合',
   'login-submit': '登录',
   title: '海外代理商后台',
   'account-login': '账号登录',
@@ -41,8 +43,13 @@ const zhCn = {
   // manage
   recharge: '续费',
   freeze: '封号',
+  'un-freeze': '解封',
   'freeze-tip': '封号提示',
   'freeze-tip-content': '您确定要封号该账号？封号后登录将显示封号',
+  'freeze-tip1': '解封提示',
+  'freeze-tip1-content': '您确定要封号选中账号？封号后登录将显示封号',
+  'freeze-tip2-content': '您确定要解封该账号？解封后账号可登录',
+  'buy-account-second': '续费',
   'reset-pass': '重置密码',
   'create-time': '创建时间',
   'open-product': '开通产品',
@@ -59,6 +66,11 @@ const zhCn = {
   'buy-number-rule': '购买数量为大于0的整数',
   'buy-year-required': '请输入购买时长/年',
   'buy-year-rule': '购买时长/年为大于0的整数',
+  'success-result': '支付成功！',
+  'success-result-btn': '立即导出账号',
+  'failure-result': '支付失败！',
+  'failure-result-btn': '重新支付',
+
   // elementUI
   ...zhCNLocale
 }

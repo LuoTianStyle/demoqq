@@ -18,11 +18,14 @@ const en = {
   exit: 'Logout',
   'exit-tip': 'Do you want to log out, whether or not to continue?',
   return: 'Back',
+  'do-success': 'Operation is successful',
   // 登录页
   username: 'Account',
   password: 'Password',
   'username-placehold': 'Please enter your account name',
   'username-is-required': 'Account cannot be empty',
+  'password-is-wrong':
+    'Password format is wrong, please input alphanumeric combination of 5 to 13',
   'password-placehold': 'Please enter your password',
   'password-is-required': 'Password cannot be empty',
   'login-submit': 'Login',
@@ -41,9 +44,16 @@ const en = {
   // manage
   recharge: 'Renewal',
   freeze: 'Freeze',
-  'freeze-tip': '封号提示',
+  'un-freeze': 'Unlock',
+  'freeze-tip': 'Titles Prompt',
   'freeze-tip-content':
     'Are you sure you want to ban the account?Titles after login will show the titles',
+  'freeze-tip1': 'Unlock Prompt',
+  'freeze-tip1-content':
+    'Are you sure you want to titles selected account?Titles after login will show the titles',
+  'freeze-tip2-content':
+    'Are you sure you want to unlock the account?After the unlock account can log in',
+  'buy-account-second': 'Renewal',
   'reset-pass': 'Reset Password',
   'create-time': 'Create Time',
   'open-product': 'Product',
@@ -60,6 +70,10 @@ const en = {
   'buy-number-rule': 'Purchase number is an integer greater than zero',
   'buy-year-required': 'Please enter the purchase time(year)',
   'buy-year-rule': 'purchase time(year) is an integer greater than zero',
+  'success-result': 'pay success ！',
+  'success-result-btn': 'export account',
+  'failure-result': 'pay failure ！',
+  'failure-result-btn': 'To pay for',
   // elementUI
   ...enLocale
 }

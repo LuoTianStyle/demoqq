@@ -25,11 +25,13 @@
 <script>
 import PassModal from '@/components/modal/PassModal.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
+import { getStorage, clearStorage } from '@/utils/storage'
+import { logout } from '@/api'
 export default {
   name: 'InfoSet',
   data() {
     return {
-      name: 'Lucy',
+      name: '',
       modalShow: false
     }
   },
@@ -45,12 +47,26 @@ export default {
           cancelButtonText: this.$t('cancel'),
           type: 'warning'
         })
-          .then(() => {})
+          .then(() => {
+            this.logout()
+          })
           .catch(() => {})
       } else {
         this.modalShow = true
       }
+    },
+    async logout() {
+      await logout()
+      clearStorage()
+      this.$router.push('/login')
+      this.$message({
+        message: this.$t('do-success'),
+        type: 'success'
+      })
     }
+  },
+  mounted() {
+    this.name = getStorage('userData').username
   }
 }
 </script>
