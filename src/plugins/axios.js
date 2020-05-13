@@ -1,10 +1,10 @@
 'use strict'
 import axios from 'axios'
 import { Loading, Message } from 'element-ui'
-import { getStorage } from '@/utils/storage.js'
+import { getStorage, setStorage } from '@/utils/storage.js'
 import url from '@/utils/path.js'
 let config = {
-  timeout: 5 * 10000
+  timeout: 5 * 1000
 }
 let loadingCount = 0
 let loading
@@ -39,11 +39,8 @@ const _axios = axios.create(config)
 
 _axios.interceptors.request.use(
   function(config) {
-    if (config.showLoading) {
-      showLoading()
-    }
     config.headers.common['authorizationType'] = 'web'
-    if (getStorage('userData') && getStorage('userData') !== '') {
+    if (getStorage('userData')) {
       config.headers.common['token'] = getStorage('userData').token
     }
     if (process.env.NODE_ENV === 'production') {
@@ -52,6 +49,9 @@ _axios.interceptors.request.use(
         process.env.VUE_APP_CURRENTMODE === 'production'
           ? url.cc + str
           : url.com + str
+    }
+    if (config.showLoading) {
+      showLoading()
     }
     return config
   },
@@ -63,13 +63,11 @@ _axios.interceptors.request.use(
 
 _axios.interceptors.response.use(
   function(response) {
-    if (response.config.showLoading) {
-      hideLoading()
-    }
-    if (response.data.code === 1020 && localStorage.getItem('userData')) {
-      localStorage.setItem('userData', '')
+    if (response.data.code === 1020 && getStorage('userData')) {
+      setStorage('userData', '')
       location.reload()
     } else {
+      hideLoading()
       return response
     }
   },
@@ -104,7 +102,7 @@ export function get(url, params = {}, config = { showLoading: true }) {
           if (data.code === 0) {
             resolve(data)
           } else {
-            Message.warning(data.msg)
+            Message.error({ message: data.msg, duration: 3000 })
             return
           }
         } else {
@@ -127,7 +125,7 @@ export function post(url, data = {}, config = { showLoading: true }) {
           if (data.code === 0) {
             resolve(data)
           } else {
-            Message.warning(data.msg)
+            Message.error({ message: data.msg, duration: 3000 })
             return
           }
         } else {

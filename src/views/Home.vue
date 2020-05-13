@@ -49,7 +49,6 @@ import BuyModal from '@/components/modal/BuyModal'
 import BuyTable from '@/components/home/BuyTable'
 import PaginationBar from '@/components/PaginationBar'
 import SvgIcon from '@/components/SvgIcon'
-import path from '@/utils/path'
 export default {
   name: 'Home',
   components: {
@@ -61,7 +60,6 @@ export default {
   },
   data() {
     return {
-      url: '',
       modalShow: false,
       number: '￡2555.00',
       tableData: [],
@@ -79,16 +77,6 @@ export default {
   methods: {
     // 导出
     async putList(e, id, category) {
-      if (process.env.NODE_ENV === 'production') {
-        if (process.env.VUE_APP_CURRENTMODE === 'production') {
-          this.url = path.com
-        } else {
-          this.url = path.cc
-        }
-      } else {
-        this.url = path.cc
-      }
-
       if (e === 1) {
         const params = {}
         if (this.time.beginTime) {

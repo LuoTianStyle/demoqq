@@ -12,4 +12,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.el-message {
+  min-width: 80px !important;
+  padding: 15px 30px 15px 20px !important;
+}
+</style>
