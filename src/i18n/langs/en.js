@@ -19,6 +19,8 @@ const en = {
   'exit-tip': 'Do you want to log out, whether or not to continue?',
   return: 'Back',
   'do-success': 'Successful Operation',
+  'route-to': 'Whether or not to jump to',
+  'route-to-tip': 'Jump prompt',
   // 登录页
   username: 'Account',
   password: 'Password',
@@ -41,6 +43,10 @@ const en = {
   'buy-record': 'Purchase Records',
   welcome: 'Welcome to use',
   'come-to': 'NOBOOK Overseas Agent Management Backend',
+  'pay-status': 'status',
+  'pay-status-undo': 'Not Paid',
+  'pay-status-do': 'Paid',
+  'pay-status-back': 'Refunded',
   // manage
   recharge: 'Renewal',
   freeze: 'Freeze',

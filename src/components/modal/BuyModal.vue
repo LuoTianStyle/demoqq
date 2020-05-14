@@ -35,7 +35,7 @@
           <el-option
             v-for="item in product"
             :key="item.id"
-            :label="item.name"
+            :label="item.nameTmp"
             :value="item"
           />
         </el-select>
@@ -166,32 +166,30 @@ export default {
         }
       })
     },
+    async pay(e) {
+      const pay = await getPay({ sn: e })
+      this.$confirm(
+        `${this.$t('route-to')}Paypal Pay?`,
+        this.$t('route-to-tip'),
+        {
+          confirmButtonText: this.$t('sure'),
+          cancelButtonText: this.$t('cancel'),
+          type: 'warning'
+        }
+      )
+        .then(() => {
+          window.open(pay.data.payurl)
+        })
+        .catch(() => {})
+    },
     async createOrder() {
       const parmas = {
         times: this.form.year,
         num: this.form.number,
         productId: this.form.product.id
       }
-      // const openWindow = window.open()
       const res = await createOrder(parmas)
-      const pay = await getPay({ sn: res.data.sn })
-      this.$confirm('是否跳转到Paypal Pay?', '跳转提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        center: true
-      })
-        .then(() => {
-          window.open(pay.data.payurl)
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: '您尚未支付'
-          })
-        })
-      // openWindow.location = pay.data.payurl
-      // this.resultShow = true
+      this.pay(res.data.sn)
     },
     async createOrderThen() {
       const parmas = {
@@ -199,17 +197,29 @@ export default {
         usernameArr: this.usernameArr,
         productId: this.form.product.id
       }
-      const openWindow = window.open()
+      // const openWindow = window.open()
+      // const res = await createRenew(parmas)
+      // const pay = await getPay({ sn: res.data.sn })
+      // openWindow.location = pay.data.payurl
       const res = await createRenew(parmas)
-      const pay = await getPay({ sn: res.data.sn })
-      openWindow.location = pay.data.payurl
+      this.pay(res.data.sn)
     },
     async getList() {
       if (!this.$store.state.product.length) {
         const res = await getProduct()
         this.$store.commit('setProduct', res.data)
       }
-      this.product = this.$store.state.product
+      this.product = this.$store.state.product.map(item => {
+        const lang = getStorage('lang')
+        const name =
+          lang === 'zhCN'
+            ? item.name
+            : lang === 'zhTW'
+            ? item.tcName
+            : item.englishName
+        item.nameTmp = name
+        return item
+      })
       this.form.product = this.product[0]
       this.price = this.form.product.price
     }

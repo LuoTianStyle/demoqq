@@ -19,6 +19,8 @@ const zhTW = {
   'exit-tip': '你是否要退出登錄, 是否繼續?',
   return: '返回',
   'do-success': '操作成功',
+  'route-to': '是否跳轉到',
+  'route-to-tip': '跳轉提示',
   // 登录页
   username: '賬號',
   password: '密碼',
@@ -38,6 +40,10 @@ const zhTW = {
   'cost-total': '消費累計',
   'buy-account': '購買賬號',
   'buy-record': '購買記錄',
+  'pay-status': '支付狀態',
+  'pay-status-undo': '未支付',
+  'pay-status-do': '已支付',
+  'pay-status-back': '已退款',
   welcome: '歡迎使用',
   'come-to': 'NOBOOK海外代理商管理後臺',
   // manage

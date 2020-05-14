@@ -78,7 +78,9 @@ export default {
     // 导出
     async putList(e, id, category) {
       if (e === 1) {
-        const params = {}
+        const params = {
+          lang: getStorage('lang') || 'en'
+        }
         if (this.time.beginTime) {
           params.beginTime = this.time.beginTime
         }
@@ -89,6 +91,7 @@ export default {
         window.open(res.data.fileUrl)
       } else {
         const params = {
+          lang: getStorage('lang') || 'en',
           orderId: id,
           orderCategory: category
         }

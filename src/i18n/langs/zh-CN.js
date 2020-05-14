@@ -19,6 +19,8 @@ const zhCn = {
   'exit-tip': '你是否要退出登录, 是否继续?',
   return: '返回',
   'do-success': '操作成功',
+  'route-to': '是否跳转到',
+  'route-to-tip': '跳转提示',
   // 登录页
   username: '账号',
   password: '密码',
@@ -38,6 +40,10 @@ const zhCn = {
   'cost-total': '消费累计',
   'buy-account': '购买账号',
   'buy-record': '购买记录',
+  'pay-status': '支付状态',
+  'pay-status-undo': '未支付',
+  'pay-status-do': '已支付',
+  'pay-status-back': '已退款',
   welcome: '欢迎使用',
   'come-to': 'NOBOOK海外代理商管理后台',
   // manage

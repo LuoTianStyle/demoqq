@@ -25,7 +25,13 @@
           <div
             v-for="item in scope.row.userVip"
             :key="item.id"
-            v-text="item.productName"
+            v-text="
+              $i18n.locale === 'en'
+                ? scope.row.productEnglishName
+                : $i18n.locale === 'zhCN'
+                ? scope.row.productName
+                : scope.row.productTcName
+            "
           />
         </template>
       </el-table-column>
