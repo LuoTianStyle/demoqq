@@ -45,3 +45,15 @@ export const getPutList = params => {
 export const getPutAccount = params => {
   return get(`api_back/api/v1/user/export`, params)
 }
+// 导出账号
+export const getPay = params => {
+  return get(`api_back/api/v1/paypal/pay`, params)
+}
+// 修改密码
+export const postChangePass = params => {
+  return post(`api_back/api/v1/adminlogin/editPwd`, params)
+}
+// 获取用户信息
+export const getUserInfo = params => {
+  return get(`api_back/api/v1/adminlogin/userInfo`, params)
+}

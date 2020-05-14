@@ -57,7 +57,7 @@
   </el-dialog>
 </template>
 <script>
-import { createOrder, getProduct, createRenew } from '@/api'
+import { createOrder, getProduct, createRenew, getPay } from '@/api'
 import { getStorage } from '@/utils/storage'
 import ResultModal from './ResultModal'
 export default {
@@ -172,8 +172,25 @@ export default {
         num: this.form.number,
         productId: this.form.product.id
       }
+      // const openWindow = window.open()
       const res = await createOrder(parmas)
-      console.log(res)
+      const pay = await getPay({ sn: res.data.sn })
+      this.$confirm('是否跳转到Paypal Pay?', '跳转提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      })
+        .then(() => {
+          window.open(pay.data.payurl)
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '您尚未支付'
+          })
+        })
+      // openWindow.location = pay.data.payurl
       // this.resultShow = true
     },
     async createOrderThen() {
@@ -182,9 +199,10 @@ export default {
         usernameArr: this.usernameArr,
         productId: this.form.product.id
       }
+      const openWindow = window.open()
       const res = await createRenew(parmas)
-      console.log(res)
-      // this.resultShow = true
+      const pay = await getPay({ sn: res.data.sn })
+      openWindow.location = pay.data.payurl
     },
     async getList() {
       if (!this.$store.state.product.length) {

@@ -18,7 +18,7 @@ const en = {
   exit: 'Logout',
   'exit-tip': 'Do you want to log out, whether or not to continue?',
   return: 'Back',
-  'do-success': 'Operation is successful',
+  'do-success': 'Successful Operation',
   // 登录页
   username: 'Account',
   password: 'Password',

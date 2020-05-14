@@ -16,6 +16,7 @@
       </el-dropdown-item>
     </el-dropdown-menu>
     <pass-modal
+      @submitPass="submitPass"
       :show.sync="modalShow"
       v-if="modalShow"
       :title="$t('pass-change')"
@@ -25,8 +26,8 @@
 <script>
 import PassModal from '@/components/modal/PassModal.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
-import { getStorage, clearStorage } from '@/utils/storage'
-import { logout } from '@/api'
+import { getStorage, removeStorage } from '@/utils/storage'
+import { logout, postChangePass } from '@/api'
 export default {
   name: 'InfoSet',
   data() {
@@ -55,9 +56,21 @@ export default {
         this.modalShow = true
       }
     },
+    // 重置密码提交
+    async submitPass(e) {
+      const params = {
+        password: e
+      }
+      await postChangePass(params)
+      this.$message({
+        message: this.$t('do-success'),
+        type: 'success'
+      })
+      this.modalShow = false
+    },
     async logout() {
       await logout()
-      clearStorage()
+      removeStorage('userData')
       this.$router.push('/login')
       this.$message({
         message: this.$t('do-success'),

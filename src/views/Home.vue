@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       modalShow: false,
-      number: '￡2555.00',
+      number: '0',
       tableData: [],
       pagination: {
         total: 0,
@@ -109,11 +109,12 @@ export default {
         params.endTime = this.time.endTime
       }
       const res = await getOrder(params)
-      this.tableData = res.data.data.map(item => {
+      this.number = getStorage('userData').unit + res.data.payTotal
+      this.tableData = res.data.list.data.map(item => {
         item.money = getStorage('userData').unit + item.money
         return item
       })
-      this.pagination.total = res.data.total
+      this.pagination.total = res.data.list.total
     },
     // 搜索
     searchHandle(e) {

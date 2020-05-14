@@ -26,6 +26,7 @@
             :placeholder="$t('username-placehold')"
             v-model="loginForm.username"
             autocomplete="off"
+            @keyup.enter.native="enterSubmit"
           />
         </el-form-item>
         <el-form-item prop="password" :label="$t('password')" class="item">
@@ -34,6 +35,7 @@
             :placeholder="$t('password-placehold')"
             v-model="loginForm.password"
             autocomplete="off"
+            @keyup.enter.native="enterSubmit"
           >
             <i slot="suffix" class="pass-icon" @click="showPass">
               <svg-icon :icon-class="passShow ? 'pass-show' : 'pass-hide'" />
@@ -58,7 +60,7 @@
 </template>
 
 <script>
-import { login } from '@/api'
+import { login, getUserInfo } from '@/api'
 import md5 from 'js-md5'
 import { currency } from '@/utils/currency'
 import { setStorage } from '@/utils/storage.js'
@@ -109,6 +111,11 @@ export default {
         }
       })
     },
+    enterSubmit(e) {
+      if (e.keyCode === 13) {
+        this.login()
+      }
+    },
     // 登录
     async login() {
       const params = {
@@ -116,19 +123,19 @@ export default {
         password: md5(this.loginForm.password)
       }
       const res = await login(params)
-      if (res) {
-        this.$message({
-          message: this.$t('do-success'),
-          type: 'success'
-        })
-        res.data.unit = currency('GBP')
-        setStorage('userData', res.data)
-        let timer = setTimeout(() => {
-          this.$router.push('/home')
-          clearTimeout(timer)
-          timer = null
-        }, 500)
-      }
+      setStorage('userData', res.data)
+      const info = await getUserInfo()
+      res.data.unit = currency(info.data.agentInfo.priceUnit)
+      setStorage('userData', res.data)
+      this.$message({
+        message: this.$t('do-success'),
+        type: 'success'
+      })
+      let timer = setTimeout(() => {
+        this.$router.push('/home')
+        clearTimeout(timer)
+        timer = null
+      }, 500)
     }
   }
 }

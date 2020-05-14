@@ -45,13 +45,8 @@ const routes = [
     ]
   },
   {
-    path: '/404',
-    name: '404',
-    component: () => import('../views/404.vue')
-  },
-  {
     path: '*',
-    redirect: '/404'
+    redirect: '/home'
   }
 ]
 

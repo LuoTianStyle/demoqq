@@ -3,10 +3,13 @@
 </template>
 
 <script>
-import { getStorage } from '@/utils/storage.js'
+import { getStorage, setStorage } from '@/utils/storage.js'
 export default {
   name: 'App',
   mounted() {
+    if (!getStorage('lang')) {
+      setStorage('lang', 'en')
+    }
     this.$i18n.locale = getStorage('lang') || 'en'
   }
 }
