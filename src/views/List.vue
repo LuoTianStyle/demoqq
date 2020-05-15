@@ -74,11 +74,8 @@ export default {
       const res = await getList(params)
       this.tableData = res.data.data.map(item => {
         item.createAt = dataFormat(item.createAt)
-        item.userVip = item.userVip.map(item => {
-          return {
-            productName: item.productName,
-            vipEndTime: dataFormat(item.vipEndTime)
-          }
+        item.userVip.forEach(item => {
+          item.vipEndTime = dataFormat(item.vipEndTime)
         })
         return item
       })

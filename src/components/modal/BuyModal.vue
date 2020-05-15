@@ -53,13 +53,12 @@
         />
       </el-form-item>
     </el-form>
-    <result-modal :show.sync="resultShow" v-if="resultShow" />
   </el-dialog>
 </template>
 <script>
 import { createOrder, getProduct, createRenew, getPay } from '@/api'
 import { getStorage } from '@/utils/storage'
-import ResultModal from './ResultModal'
+
 export default {
   name: 'BuyModal',
   props: {
@@ -67,9 +66,7 @@ export default {
     title: String,
     usernameArr: Array
   },
-  components: {
-    ResultModal
-  },
+
   data() {
     const checkNumber = (rule, value, callback) => {
       if (value === '') {
@@ -178,9 +175,12 @@ export default {
         }
       )
         .then(() => {
+          this.$emit('update:show', false)
           window.open(pay.data.payurl)
         })
-        .catch(() => {})
+        .catch(() => {
+          this.$emit('update:show', false)
+        })
     },
     async createOrder() {
       const parmas = {

@@ -27,10 +27,10 @@
             :key="item.id"
             v-text="
               $i18n.locale === 'en'
-                ? scope.row.productEnglishName
+                ? item.productEnglishName
                 : $i18n.locale === 'zhCN'
-                ? scope.row.productName
-                : scope.row.productTcName
+                ? item.productName
+                : item.productTcName
             "
           />
         </template>
@@ -137,6 +137,14 @@ export default {
     // 重置密码
     resetPass(id) {
       this.$emit('resetPass', [id])
+    }
+  },
+  watch: {
+    tableData: {
+      handler() {
+        console.log(this.tableData)
+      },
+      deep: true
     }
   }
 }

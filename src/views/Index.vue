@@ -201,6 +201,7 @@ export default {
     }
   }
   .main {
+    position: relative;
     padding: 0 24px 40px 24px;
     box-sizing: border-box;
     min-height: calc(100vh - 112px);

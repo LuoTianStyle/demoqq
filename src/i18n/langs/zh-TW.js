@@ -5,6 +5,8 @@ const zhTW = {
   home: '首頁',
   'account-manage': '賬號管理',
   'account-list': '賬號列表',
+  'result-failure': '支付失敗',
+  'result-success': '支付成功',
   404: 404,
   // commone
   'search-time-start': '開始時間',

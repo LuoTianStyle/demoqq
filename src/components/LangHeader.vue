@@ -41,19 +41,19 @@ export default {
       lang: '',
       langArray: [
         {
-          value: 'en',
-          text: 'English',
-          icon: 'en'
-        },
-        {
           value: 'zhCN',
           text: '简体中文',
           icon: 'zhcn'
         },
         {
+          value: 'en',
+          text: 'English',
+          icon: 'en'
+        },
+        {
           value: 'zhTW',
           text: '繁体中文',
-          icon: 'zhtw'
+          icon: 'zhcn'
         }
       ]
     }

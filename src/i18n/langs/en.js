@@ -5,6 +5,8 @@ const en = {
   home: 'Home',
   'account-manage': 'Account Manage',
   'account-list': 'Account List',
+  'result-failure': 'Pay Failure',
+  'result-success': 'Pay Successful',
   404: 404,
   // commone
   'search-time-start': 'Start Time',

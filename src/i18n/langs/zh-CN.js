@@ -5,6 +5,8 @@ const zhCn = {
   home: '首页',
   'account-manage': '账号管理',
   'account-list': '账号列表',
+  'result-failure': '支付失败',
+  'result-success': '支付成功',
   404: 404,
   // commone
   'search-time-start': '开始时间',

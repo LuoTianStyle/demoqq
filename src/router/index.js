@@ -34,13 +34,31 @@ const routes = [
         component: () => import('../views/Manage.vue')
       },
       {
-        path: '/list:id:category',
+        path: '/list/:id/:category',
         name: 'List',
         meta: {
           name: 'account-List'
         },
         isShow: false,
         component: () => import('../views/List.vue')
+      },
+      {
+        path: '/result/:orderId/:status/:category',
+        name: 'Result',
+        meta: {
+          name: 'result-success'
+        },
+        isShow: false,
+        component: () => import('../views/Result.vue')
+      },
+      {
+        path: '/result/:orderSn/:status',
+        name: 'Result',
+        meta: {
+          name: 'result-failure'
+        },
+        isShow: false,
+        component: () => import('../views/Result.vue')
       }
     ]
   },
