@@ -97,7 +97,6 @@ export default {
 .item {
   padding-left: 6px;
   padding-right: 6px;
-  width: 160px;
   box-sizing: border-box;
 
   &:hover {

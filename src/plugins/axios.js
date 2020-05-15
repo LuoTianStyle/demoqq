@@ -2,9 +2,9 @@
 import axios from 'axios'
 import { Loading, Message } from 'element-ui'
 import { getStorage, removeStorage } from '@/utils/storage.js'
-// import url from '@/utils/path.js'
-let config = {
-  timeout: 5 * 10000
+import url from '@/utils/path.js'
+const config = {
+  timeout: 5 * 1000 * 60
 }
 let loadingCount = 0
 let loading
@@ -50,13 +50,13 @@ _axios.interceptors.request.use(
           : 'en'
         : 'en'
     }
-    // if (process.env.NODE_ENV === 'production') {
-    //   let str = config.url.replace('/api/', '/')
-    //   config.url =
-    //     process.env.VUE_APP_CURRENTMODE === 'production'
-    //       ? url.cc + str
-    //       : url.com + str
-    // }
+    if (process.env.NODE_ENV === 'production') {
+      const str = config.url.replace('api_back', '')
+      config.url =
+        process.env.VUE_APP_CURRENTMODE === 'production'
+          ? url.cc + str
+          : url.com + str
+    }
     if (config.showLoading) {
       showLoading()
     }
@@ -70,7 +70,6 @@ _axios.interceptors.request.use(
 
 _axios.interceptors.response.use(
   function(response) {
-    console.log(1)
     if (response.data.code === 1020 && getStorage('userData')) {
       removeStorage('userData')
       location.reload()
@@ -110,7 +109,6 @@ export function get(url, params = {}, config = { showLoading: true }) {
           if (data.code === 0) {
             resolve(data)
           } else {
-            console.log(2)
             Message.error({ message: data.msg, duration: 3000 })
             return
           }

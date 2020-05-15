@@ -155,7 +155,10 @@ export default {
   }
   /deep/.el-form-item__error {
     top: -29px;
-    left: 77px;
+    width: 250px;
+    text-align: right;
+    left: auto;
+    right: 0;
   }
   .lang {
     position: absolute;

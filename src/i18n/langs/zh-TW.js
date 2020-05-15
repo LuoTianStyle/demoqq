@@ -46,6 +46,7 @@ const zhTW = {
   'pay-status-undo': '未支付',
   'pay-status-do': '已支付',
   'pay-status-back': '已退款',
+  'pay-status-select': '請選擇付款狀態',
   welcome: '歡迎使用',
   'come-to': 'NOBOOK海外代理商管理後臺',
   // manage

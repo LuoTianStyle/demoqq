@@ -34,7 +34,7 @@ const en = {
   'password-is-required': 'Password cannot be empty',
   'login-submit': 'Login',
   title: 'Overseas agent background',
-  'account-login': 'To login',
+  'account-login': 'Log in',
   // home
   'account-no': 'Order No',
   'account-number': 'Account Number',
@@ -49,16 +49,17 @@ const en = {
   'pay-status-undo': 'Not Paid',
   'pay-status-do': 'Paid',
   'pay-status-back': 'Refunded',
+  'pay-status-select': 'Please select a payment status',
   // manage
   recharge: 'Renewal',
   freeze: 'Freeze',
   'un-freeze': 'Unlock',
-  'freeze-tip': 'Titles Prompt',
+  'freeze-tip': 'Freeze Prompt',
   'freeze-tip-content':
-    'Are you sure you want to ban the account?Titles after login will show the titles',
+    'Are you sure you want to ban the account?Freeze after login will show the freeze',
   'freeze-tip1': 'Unlock Prompt',
   'freeze-tip1-content':
-    'Are you sure you want to titles selected account?Titles after login will show the titles',
+    'Are you sure you want to freeze selected account?Freeze after login will show the freeze',
   'freeze-tip2-content':
     'Are you sure you want to unlock the account?After the unlock account can log in',
   'buy-account-second': 'Renewal',
@@ -71,7 +72,7 @@ const en = {
   status: 'Status',
   normal: 'Normal',
   // modal
-  'new-pass': 'New Pass',
+  'new-pass': 'New password',
   pay: 'Paypal Pay',
   total: 'Total:',
   'buy-number-required': 'Please enter the purchase quantity',

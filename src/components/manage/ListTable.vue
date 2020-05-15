@@ -1,6 +1,7 @@
 <template>
   <div class="table">
     <el-table
+      border-spacing="100"
       :data="tableData"
       @selection-change="handleSelectionChange"
       :row-class-name="tableRowClassName"
@@ -18,9 +19,9 @@
       <el-table-column
         prop="createAt"
         :label="$t('create-time')"
-        min-width="115"
+        min-width="125"
       />
-      <el-table-column :label="$t('open-product')" min-width="140">
+      <el-table-column :label="$t('open-product')" min-width="185">
         <template slot-scope="scope">
           <div
             v-for="item in scope.row.userVip"
@@ -35,7 +36,7 @@
           />
         </template>
       </el-table-column>
-      <el-table-column :label="$t('expire-time')" min-width="130">
+      <el-table-column :label="$t('expire-time')" min-width="125">
         <template slot-scope="scope">
           <div
             v-for="item in scope.row.userVip"
@@ -54,7 +55,7 @@
           <span v-else class="freeze" v-text="$t('freeze')" />
         </template>
       </el-table-column>
-      <el-table-column :label="$t('do')" min-width="255">
+      <el-table-column :label="$t('do')" min-width="205">
         <template slot-scope="scope">
           <span
             @click="rechargeHandle(scope.row.username)"
@@ -84,6 +85,7 @@ export default {
   },
   data() {
     return {
+      index: [],
       select: [],
       username: []
     }
@@ -92,7 +94,7 @@ export default {
   methods: {
     // 表格选中
     tableRowClassName(obj) {
-      if (this.select.indexOf(obj.rowIndex) !== -1) {
+      if (this.index.indexOf(obj.rowIndex) !== -1) {
         return 'warning-row'
       }
       return ''
@@ -101,11 +103,13 @@ export default {
     // 表格选中
     handleSelectionChange(val) {
       this.select = []
+      this.index = []
       this.username = []
-      this.tableData.forEach(item => {
+      this.tableData.forEach((item, index) => {
         val.forEach(itemIn => {
           if (itemIn.id === item.id) {
             this.select.push(item.id)
+            this.index.push(index)
             this.username.push(item.username)
           }
         })
@@ -138,73 +142,80 @@ export default {
     resetPass(id) {
       this.$emit('resetPass', [id])
     }
-  },
-  watch: {
-    tableData: {
-      handler() {
-        console.log(this.tableData)
-      },
-      deep: true
-    }
   }
 }
 </script>
-<style>
+<style lang="less">
 .el-table .warning-row {
-  background: oldlace;
+  td {
+    background: oldlace;
+  }
 }
 </style>
 <style lang="less" scoped>
 /deep/.el-table {
-  border-radius: 12px;
   &::before {
     height: 0;
   }
-  .cell {
-    text-align: center;
-  }
-  th {
-    padding: 23px 0;
-  }
-  td {
-    padding: 18px 0;
+  tr {
+    background: #fff;
+    th {
+      padding: 23px 0;
+    }
+    td {
+      padding: 18px 0;
+    }
+    &:hover {
+      &.el-table__row {
+        td {
+          background: #f6f9fd;
+        }
+      }
+    }
   }
 }
 .table {
+  border-radius: 12px;
+  padding: 0 10px 10px 10px;
+  background: #fff;
   margin-bottom: 30px;
   min-width: 928px;
 }
 .normal {
-  width: 58px;
-  height: 24px;
+  padding: 0 10px;
+  height: 23px;
   background: rgba(33, 158, 108, 0.15);
   border-radius: 8px;
   font-size: 14px;
   font-weight: 400;
   color: rgba(33, 158, 108, 1);
-  line-height: 24px;
+  line-height: 23px;
   display: inline-block;
 }
 .freeze {
-  width: 58px;
-  height: 24px;
+  padding: 0 8px;
+  height: 23px;
   background: rgba(208, 2, 27, 0.15);
   border-radius: 8px;
   font-size: 14px;
   font-weight: 400;
   color: rgba(208, 2, 27, 1);
-  line-height: 24px;
+  line-height: 23px;
   display: inline-block;
 }
 .item {
   color: #ff8413;
   cursor: pointer;
   margin-right: 15px;
+
   &.unfreeze {
     color: rgba(33, 158, 108, 1);
   }
   &.pass-change {
     margin-right: 0;
+  }
+  &:hover {
+    opacity: 0.6;
   }
 }
 </style>

@@ -144,6 +144,10 @@ export default {
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
     line-height: 20px;
+    transition: all 0.3s;
+    &:hover {
+      color: #ff8413;
+    }
   }
 }
 .list-line {

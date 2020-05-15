@@ -46,6 +46,7 @@
             @click="routerTo(scope.row.id, scope.row.category)"
             class="accout-list item"
             v-text="$t('account-list')"
+            v-if="scope.row.status === 2"
           />
           <span
             v-if="scope.row.status !== 2"
@@ -111,9 +112,6 @@ export default {
   &::before {
     height: 0;
   }
-  .cell {
-    text-align: center;
-  }
   th {
     padding: 23px 0;
   }
@@ -122,23 +120,54 @@ export default {
   }
 }
 .table {
+  border-radius: 12px;
+  padding: 0 10px 10px 10px;
+  background: #fff;
   margin-bottom: 30px;
   min-width: 928px;
 }
 .un-pay {
+  padding: 0 8px;
+  height: 23px;
+  background: rgba(208, 2, 27, 0.15);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
   color: rgba(208, 2, 27, 1);
+  line-height: 23px;
+  display: inline-block;
 }
 .pay-back {
+  padding: 0 8px;
+  height: 23px;
+  background: #f9e5d4;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
   color: #ff8413;
+  line-height: 23px;
+  display: inline-block;
 }
 .paid {
+  padding: 0 10px;
+  height: 23px;
+  background: rgba(33, 158, 108, 0.15);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
   color: rgba(33, 158, 108, 1);
+  line-height: 23px;
+  display: inline-block;
 }
+
 .item {
   color: #ff8413;
   cursor: pointer;
   &.accout-list {
     margin-right: 20px;
+  }
+  &:hover {
+    opacity: 0.6;
   }
 }
 </style>

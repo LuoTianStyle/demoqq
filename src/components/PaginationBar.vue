@@ -44,6 +44,7 @@ export default {
         min-width: 32px;
         color: #999;
         background: #fff;
+        border-radius: 8px;
       }
     }
     .btn-prev {
@@ -66,6 +67,7 @@ export default {
       line-height: 32px;
       color: #999;
       border-color: transparent;
+      border-radius: 8px;
     }
   }
 }

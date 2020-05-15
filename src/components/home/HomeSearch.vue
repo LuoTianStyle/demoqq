@@ -1,5 +1,15 @@
 <template>
   <div class="search">
+    <el-select
+      v-model="status"
+      class="select"
+      :placeholder="$t('pay-status-select')"
+      clearable
+    >
+      <el-option :label="$t('pay-status-undo')" value="1" />
+      <el-option :label="$t('pay-status-do')" value="2" />
+      <el-option :label="$t('pay-status-back')" value="3" />
+    </el-select>
     <el-date-picker
       v-model="startTime"
       type="date"
@@ -32,7 +42,8 @@ export default {
   data() {
     return {
       startTime: '',
-      endTime: ''
+      endTime: '',
+      status: ''
     }
   },
   methods: {
@@ -40,7 +51,8 @@ export default {
     searchHandle() {
       const param = {
         startTime: this.startTime,
-        endTime: this.endTime
+        endTime: this.endTime,
+        status: this.status
       }
       if (this.startTime) {
         param.beginTime = parseInt(String(this.startTime).slice(0, 10))
@@ -61,6 +73,7 @@ export default {
 /deep/.el-input__inner {
   border-color: transparent;
   color: #999;
+  border-radius: 8px;
 }
 .search {
   margin-bottom: 24px;
@@ -73,8 +86,12 @@ export default {
   }
   .put {
     position: absolute;
+    height: 36px;
     right: 0;
     top: 0;
+    border-radius: 8px;
+    line-height: 36px;
+    padding: 0 24px;
     .icon {
       margin-right: 5px;
     }
@@ -83,6 +100,12 @@ export default {
     color: #ff8413;
     border-color: transparent;
     width: 100px;
+    border-radius: 8px;
+  }
+  .select {
+    width: 250px;
+    margin-right: 12px;
+    border-radius: 8px;
   }
 }
 </style>

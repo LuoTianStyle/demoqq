@@ -141,9 +141,9 @@ export default {
       transition: all 0.3s;
       text-align: center;
       .logo-small {
-        width: 48px;
+        width: 44px;
         display: inline-block;
-        padding: 32px 0;
+        padding: 34px 0;
       }
       .logo-big {
         display: inline-block;
@@ -167,7 +167,7 @@ export default {
         height: 44px;
         line-height: 44px;
         padding: 0;
-        margin: 0 12px 12px 12px;
+        margin: 0 10px 12px 10px;
         padding-left: 37px !important;
         border-radius: 8px;
         &.is-active {

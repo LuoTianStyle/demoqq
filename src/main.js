@@ -7,6 +7,7 @@ import './plugins/element.js'
 import '../theme/index.css'
 import 'normalize.css'
 import './assets/icons'
+import '@/assets/styles/variable.less'
 import i18n from './i18n/i18n'
 import VueWechatTitle from 'vue-wechat-title'
 Vue.use(VueWechatTitle)

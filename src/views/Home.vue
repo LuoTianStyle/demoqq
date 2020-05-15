@@ -70,7 +70,8 @@ export default {
       },
       time: {
         beginTime: 0,
-        endTime: 0
+        endTime: 0,
+        status: 0
       }
     }
   },
@@ -111,6 +112,9 @@ export default {
       if (this.time.endTime) {
         params.endTime = this.time.endTime
       }
+      if (this.time.status) {
+        params.status = parseInt(this.time.status)
+      }
       const res = await getOrder(params)
       this.number = getStorage('userData').unit + res.data.payTotal
       this.tableData = res.data.list.data.map(item => {
@@ -124,6 +128,7 @@ export default {
       this.pagination.page = 1
       this.time.beginTime = e.beginTime
       this.time.endTime = e.endTime
+      this.time.status = e.status
       this.getList()
     },
     // 分页变换
@@ -142,8 +147,10 @@ export default {
 .home {
   .header {
     display: flex;
+    width: 100%;
     .left {
       min-width: 445px;
+      width: 35%;
       margin-top: 15px;
       margin-right: 32px;
       display: flex;
@@ -180,6 +187,7 @@ export default {
       }
     }
     .buy {
+      width: 65%;
       min-width: 475px;
       position: relative;
       flex: 1;
@@ -210,7 +218,7 @@ export default {
           line-height: 40px;
           padding: 0 10px;
           font-size: 18px;
-          font-weight: 300;
+          font-weight: 400;
           border-radius: 12px;
           .buy-icon {
             position: relative;
