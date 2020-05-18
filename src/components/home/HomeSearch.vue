@@ -71,7 +71,7 @@ export default {
 </script>
 <style lang="less" scoped>
 /deep/.el-input__inner {
-  border-color: transparent;
+  border-color: transparent !important;
   color: #999;
   border-radius: 8px;
 }

@@ -312,7 +312,6 @@ export default {
         margin-top: 20px;
         width: 128px;
         height: 44px;
-        background: rgb(255, 132, 19);
         border-radius: 8px;
         font-size: 20px;
       }

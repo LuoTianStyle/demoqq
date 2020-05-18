@@ -165,10 +165,13 @@ export default {
   &::before {
     height: 0;
   }
+  table {
+    border-spacing: 0px 8px;
+  }
   tr {
     background: #fff;
     th {
-      padding: 23px 0;
+      padding: 15px 0;
     }
     td {
       padding: 18px 0;
@@ -192,7 +195,7 @@ export default {
 }
 .table {
   border-radius: 12px;
-  padding: 0 10px 10px 10px;
+  padding: 0 15px 6px 15px;
   background: #fff;
   margin-bottom: 30px;
   min-width: 928px;
