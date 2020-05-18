@@ -83,6 +83,8 @@ const en = {
   'success-result-btn': 'export account',
   'failure-result': 'pay failure ！',
   'failure-result-btn': 'To pay for',
+  'buy-number-rule-max': 'Purchase number is an integer less than 500',
+  'buy-year-rule-max': 'purchase time(year) is an integer less than 30',
   // elementUI
   ...enLocale
 }

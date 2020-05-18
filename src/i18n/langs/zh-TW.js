@@ -79,6 +79,8 @@ const zhTW = {
   'success-result-btn': '立即導出賬號',
   'failure-result': '支付失敗！',
   'failure-result-btn': '重新支付',
+  'buy-number-rule-max': '購買數量不得大於500',
+  'buy-year-rule-max': '購買時長/年不得大於30',
   // elementUI
   ...zhTWLocale
 }

@@ -73,6 +73,8 @@ export default {
         callback(new Error(this.$t('buy-number-required')))
       } else if (!value) {
         callback(new Error(this.$t('buy-number-rule')))
+      } else if (value > 500 || value === Infinity) {
+        callback(new Error(this.$t('buy-number-rule-max')))
       } else {
         callback()
       }
@@ -82,6 +84,8 @@ export default {
         callback(new Error(this.$t('buy-year-required')))
       } else if (!value) {
         callback(new Error(this.$t('buy-year-rule')))
+      } else if (value > 30 || value === Infinity) {
+        callback(new Error(this.$t('buy-year-rule-max')))
       } else {
         callback()
       }
@@ -197,10 +201,6 @@ export default {
         usernameArr: this.usernameArr,
         productId: this.form.product.id
       }
-      // const openWindow = window.open()
-      // const res = await createRenew(parmas)
-      // const pay = await getPay({ sn: res.data.sn })
-      // openWindow.location = pay.data.payurl
       const res = await createRenew(parmas)
       this.pay(res.data.sn)
     },
