@@ -149,6 +149,14 @@ export default {
 .el-table .warning-row {
   td {
     background: oldlace;
+    &:first-child {
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+    }
+    &:last-child {
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
   }
 }
 </style>
@@ -169,6 +177,14 @@ export default {
       &.el-table__row {
         td {
           background: #f6f9fd;
+          &:first-child {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+          }
+          &:last-child {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+          }
         }
       }
     }

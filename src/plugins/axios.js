@@ -4,7 +4,7 @@ import { Loading, Message } from 'element-ui'
 import { getStorage, removeStorage } from '@/utils/storage.js'
 import url from '@/utils/path.js'
 const config = {
-  timeout: 5 * 1000 * 60
+  timeout: 10 * 1000 * 60
 }
 let loadingCount = 0
 let loading

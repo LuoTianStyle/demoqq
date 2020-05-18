@@ -112,11 +112,28 @@ export default {
   &::before {
     height: 0;
   }
-  th {
-    padding: 23px 0;
-  }
-  td {
-    padding: 18px 0;
+  tr {
+    th {
+      padding: 23px 0;
+    }
+    td {
+      padding: 18px 0;
+    }
+    &:hover {
+      &.el-table__row {
+        td {
+          background: #f6f9fd;
+          &:first-child {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+          }
+          &:last-child {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+          }
+        }
+      }
+    }
   }
 }
 .table {

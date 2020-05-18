@@ -98,6 +98,7 @@ export default {
   padding-left: 6px;
   padding-right: 6px;
   box-sizing: border-box;
+  border-radius: 8px;
 
   &:hover {
     background-color: rgb(246, 249, 253);
