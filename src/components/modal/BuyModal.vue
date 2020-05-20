@@ -42,7 +42,7 @@
       </el-form-item>
       <div class="item total">
         <span class="text" v-text="$t('total')" />
-        <span class="number">{{ unit }}{{ number }}</span>
+        <span class="number">{{ unit }}{{ number || 0 }}</span>
       </div>
       <el-form-item class="submit">
         <el-button
@@ -71,7 +71,7 @@ export default {
     const checkNumber = (rule, value, callback) => {
       if (value === '') {
         callback(new Error(this.$t('buy-number-required')))
-      } else if (!value) {
+      } else if (value <= 0 || !value) {
         callback(new Error(this.$t('buy-number-rule')))
       } else if (value > 500 || value === Infinity) {
         callback(new Error(this.$t('buy-number-rule-max')))
@@ -82,7 +82,7 @@ export default {
     const checkYear = (rule, value, callback) => {
       if (value === '') {
         callback(new Error(this.$t('buy-year-required')))
-      } else if (!value) {
+      } else if (value <= 0 || !value) {
         callback(new Error(this.$t('buy-year-rule')))
       } else if (value > 30 || value === Infinity) {
         callback(new Error(this.$t('buy-year-rule-max')))
@@ -148,6 +148,20 @@ export default {
         this.price = this.form.product.price
       },
       deep: true
+    },
+    'form.number': {
+      handler() {
+        if (this.form.number > 500) {
+          this.form.number = 500
+        }
+      }
+    },
+    'form.year': {
+      handler() {
+        if (this.form.year > 30) {
+          this.form.year = 30
+        }
+      }
     }
   },
   methods: {

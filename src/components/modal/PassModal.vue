@@ -142,7 +142,8 @@ export default {
     }
     .el-form-item__error {
       top: 2px;
-      left: 70px;
+      right: 0;
+      text-align: right;
     }
   }
   .item {

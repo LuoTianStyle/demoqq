@@ -3,25 +3,26 @@
 </template>
 
 <script>
-import { getStorage, setStorage } from '@/utils/storage.js'
+import { getStorage } from '@/utils/storage.js'
 export default {
   name: 'App',
   mounted() {
     const lang = navigator.language || navigator.userLanguage
+    let currentCountry
     if (lang === 'zh-CN' || lang === 'zh-SG') {
-      setStorage('lang', 'zhCN')
+      currentCountry = 'zhCN'
     } else if (
       lang === 'zh-TW' ||
       lang === 'zh-HK' ||
       lang === 'zh-MO' ||
       lang === 'zh-Hant'
     ) {
-      setStorage('lang', 'zhTW')
+      currentCountry = 'zhTW'
     } else {
-      setStorage('lang', 'en')
+      currentCountry = 'en'
     }
-
-    this.$i18n.locale = getStorage('lang') || 'en'
+    console.log(getStorage('lang'))
+    this.$i18n.locale = getStorage('lang') || currentCountry
   }
 }
 </script>

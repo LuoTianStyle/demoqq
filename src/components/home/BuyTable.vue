@@ -3,7 +3,12 @@
     <el-table :data="tableData">
       <el-table-column min-width="168" prop="sn" :label="$t('account-no')" />
       <el-table-column
-        min-width="145"
+        prop="createAt"
+        :label="$t('create-time')"
+        min-width="125"
+      />
+      <el-table-column
+        min-width="135"
         prop="num"
         :label="$t('account-number')"
       />
@@ -49,7 +54,7 @@
             v-if="scope.row.status === 2"
           />
           <span
-            v-if="scope.row.status !== 2"
+            v-if="scope.row.status === 1"
             class="put-data item"
             v-text="$t('failure-result-btn')"
             @click="rePay(scope.row.sn)"

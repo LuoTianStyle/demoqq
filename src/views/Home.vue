@@ -49,6 +49,7 @@ import BuyModal from '@/components/modal/BuyModal'
 import BuyTable from '@/components/home/BuyTable'
 import PaginationBar from '@/components/PaginationBar'
 import SvgIcon from '@/components/SvgIcon'
+import { dataFormat } from '@/utils/time'
 export default {
   name: 'Home',
   components: {
@@ -116,9 +117,11 @@ export default {
         params.status = parseInt(this.time.status)
       }
       const res = await getOrder(params)
+
       this.number = getStorage('userData').unit + res.data.payTotal
       this.tableData = res.data.list.data.map(item => {
         item.money = getStorage('userData').unit + item.money
+        item.createAt = dataFormat(item.createAt)
         return item
       })
       this.pagination.total = res.data.list.total
