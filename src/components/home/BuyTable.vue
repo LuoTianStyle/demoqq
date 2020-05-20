@@ -60,7 +60,7 @@
             @click="rePay(scope.row.sn)"
           />
           <span
-            v-else
+            v-if="scope.row.status === 2"
             class="put-data item"
             v-text="$t('put-data')"
             @click="putList(scope.row.id, scope.row.category)"
