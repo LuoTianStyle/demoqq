@@ -10,6 +10,7 @@
         type="selection"
         width="55"
         v-if="$route.path === '/manage'"
+        :selectable="checkSelectable"
       />
       <el-table-column
         prop="username"
@@ -58,19 +59,38 @@
       <el-table-column :label="$t('do')" min-width="205">
         <template slot-scope="scope">
           <span
+            v-if="scope.row.status === 0"
             @click="rechargeHandle(scope.row.username)"
             class="item"
             v-text="$t('recharge')"
           />
           <span
-            :class="scope.row.status === 0 ? 'item' : 'item unfreeze'"
-            v-text="scope.row.status === 0 ? $t('freeze') : $t('un-freeze')"
+            v-if="scope.row.status === 0"
+            class="item"
+            v-text="$t('freeze')"
             @click="freezeHandle(scope.row.id, scope.row.status)"
           />
           <span
+            v-if="scope.row.status === 0"
             class="pass-change item"
             v-text="$t('reset-pass')"
             @click="resetPass(scope.row.id)"
+          />
+          <span
+            v-if="scope.row.status !== 0"
+            class="item disabled"
+            v-text="$t('recharge')"
+          />
+          <span
+            v-if="scope.row.status !== 0"
+            class="item unfreeze"
+            v-text="$t('un-freeze')"
+            @click="freezeHandle(scope.row.id, scope.row.status)"
+          />
+          <span
+            v-if="scope.row.status !== 0"
+            class="pass-change item disabled"
+            v-text="$t('reset-pass')"
           />
         </template>
       </el-table-column>
@@ -137,6 +157,9 @@ export default {
           this.$emit('freezeHandle', [id], st)
         })
         .catch(() => {})
+    },
+    checkSelectable(row) {
+      return row.status === 0
     },
     // 重置密码
     resetPass(id) {
@@ -235,6 +258,13 @@ export default {
   }
   &:hover {
     opacity: 0.6;
+  }
+  &.disabled {
+    color: #999;
+    cursor: not-allowed;
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 </style>

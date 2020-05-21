@@ -58,7 +58,9 @@ export default {
         param.beginTime = parseInt(String(this.startTime).slice(0, 10))
       }
       if (this.endTime) {
-        param.endTime = parseInt(String(this.endTime).slice(0, 10))
+        param.endTime = parseInt(
+          String(this.endTime + (24 * 60 * 60 - 1) * 1000).slice(0, 10)
+        )
       }
       this.$emit('searchHandle', param)
     },
