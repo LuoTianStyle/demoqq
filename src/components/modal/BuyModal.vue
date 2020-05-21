@@ -151,6 +151,9 @@ export default {
     },
     'form.number': {
       handler() {
+        if (typeof this.form.number !== 'number') {
+          this.form.number = ''
+        }
         if (this.form.number > 500) {
           this.form.number = 500
         }
@@ -158,6 +161,9 @@ export default {
     },
     'form.year': {
       handler() {
+        if (typeof this.form.year !== 'number') {
+          this.form.year = ''
+        }
         if (this.form.year > 30) {
           this.form.year = 30
         }

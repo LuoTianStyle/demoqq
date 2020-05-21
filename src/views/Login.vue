@@ -26,7 +26,6 @@
             :placeholder="$t('username-placehold')"
             v-model="loginForm.username"
             autocomplete="off"
-            @keyup.enter.native="enterSubmit"
           />
         </el-form-item>
         <el-form-item prop="password" :label="$t('password')" class="item">
@@ -72,6 +71,32 @@ export default {
     LangHeader
   },
   data() {
+    const validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(this.$t('password-is-required')))
+      } else if (
+        !/^[0-9a-zA-Z]+$/.test(value) ||
+        value.length < 5 ||
+        value.length > 13
+      ) {
+        callback(new Error(this.$t('password-is-wrong')))
+      } else {
+        callback()
+      }
+    }
+    const validateName = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(this.$t('username-is-required')))
+      } else if (
+        !/^[0-9a-zA-Z]+$/.test(value) ||
+        value.length < 3 ||
+        value.length > 30
+      ) {
+        callback(new Error(this.$t('username-is-wrong')))
+      } else {
+        callback()
+      }
+    }
     return {
       passShow: false,
       loginForm: {
@@ -84,12 +109,20 @@ export default {
             required: true,
             message: this.$t('username-is-required'),
             trigger: 'blur'
+          },
+          {
+            validator: validateName,
+            trigger: 'blur'
           }
         ],
         password: [
           {
             required: true,
             message: this.$t('password-is-required'),
+            trigger: 'blur'
+          },
+          {
+            validator: validatePass,
             trigger: 'blur'
           }
         ]

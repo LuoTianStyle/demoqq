@@ -144,6 +144,7 @@ export default {
       top: 2px;
       right: 0;
       text-align: right;
+      padding-left: 130px;
     }
   }
   .item {

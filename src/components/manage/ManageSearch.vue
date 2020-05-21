@@ -82,15 +82,33 @@ export default {
   },
   data() {
     return {
+      error: false,
       username: '',
       timeCategory: '0',
       beginTime: '',
       endTime: ''
     }
   },
+  watch: {
+    username() {
+      if (this.username !== '') {
+        this.error =
+          !/^[0-9a-zA-Z]+$/.test(this.username) || this.username.length > 30
+      } else {
+        this.error = false
+      }
+    }
+  },
   methods: {
     // 搜索
     searchHandle() {
+      if (this.error) {
+        this.$message({
+          message: this.$t('username-is-wrong1'),
+          type: 'warning'
+        })
+        return
+      }
       const param = {
         timeCategory: parseInt(this.timeCategory),
         beginTime: '',

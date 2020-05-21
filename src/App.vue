@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { getStorage } from '@/utils/storage.js'
+import { getStorage, setStorage } from '@/utils/storage.js'
 export default {
   name: 'App',
   mounted() {
@@ -21,7 +21,9 @@ export default {
     } else {
       currentCountry = 'en'
     }
-    console.log(getStorage('lang'))
+    if (!getStorage('lang')) {
+      setStorage('lang', currentCountry)
+    }
     this.$i18n.locale = getStorage('lang') || currentCountry
   }
 }

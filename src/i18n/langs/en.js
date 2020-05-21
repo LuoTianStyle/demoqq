@@ -29,7 +29,11 @@ const en = {
   'username-placehold': 'Please enter your account name',
   'username-is-required': 'Account cannot be empty',
   'password-is-wrong':
-    'Password format is wrong, please input alphanumeric combination of 5 to 13',
+    'Password is wrong, please input alphanumeric combination of 5 to 13',
+  'username-is-wrong':
+    'Username is wrong, please input alphanumeric combination of 3 to 30',
+  'username-is-wrong1':
+    'Username is wrong, please input alphanumeric combination less than 30',
   'password-placehold': 'Please enter your password',
   'password-is-required': 'Password cannot be empty',
   'login-submit': 'Login',
