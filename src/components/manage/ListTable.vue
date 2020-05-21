@@ -20,7 +20,7 @@
       <el-table-column
         prop="createAt"
         :label="$t('create-time')"
-        min-width="125"
+        min-width="127"
       />
       <el-table-column :label="$t('open-product')" min-width="185">
         <template slot-scope="scope">
