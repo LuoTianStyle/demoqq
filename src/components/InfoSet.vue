@@ -8,44 +8,49 @@
     <el-dropdown-menu slot="dropdown" class="lang">
       <el-dropdown-item class="item" command="pass">
         <svg-icon class="item-icon" icon-class="pass-change" />
-        {{ $t('pass-change') }}
+        修改密码
       </el-dropdown-item>
       <el-dropdown-item class="item" command="exit">
         <svg-icon class="item-icon" icon-class="exit" />
-        {{ $t('exit') }}
+        退出
       </el-dropdown-item>
     </el-dropdown-menu>
-    <pass-modal
-      @submitPass="submitPass"
+    <input-modal
+      @submitHandle="submitHandle"
       :show.sync="modalShow"
       v-if="modalShow"
-      :title="$t('pass-change')"
+      title="修改密码"
+      label="新密码"
+      placeholder="请输入新密码"
+      :rule="passRule"
     />
   </el-dropdown>
 </template>
 <script>
-import PassModal from '@/components/modal/PassModal.vue'
+import InputModal from '@/components/modal/InputModal.vue'
 import SvgIcon from '@/components/SvgIcon.vue'
 import { getStorage, removeStorage } from '@/utils/storage'
 import { logout, postChangePass } from '@/api'
+import rules from '@/utils/rule'
 export default {
   name: 'InfoSet',
   data() {
     return {
       name: '',
-      modalShow: false
+      modalShow: false,
+      passRule: ''
     }
   },
   components: {
     SvgIcon,
-    PassModal
+    InputModal
   },
   methods: {
     clickHandle(e) {
       if (e === 'exit') {
-        this.$confirm(this.$t('exit-tip'), this.$t('exit'), {
-          confirmButtonText: this.$t('sure'),
-          cancelButtonText: this.$t('cancel'),
+        this.$confirm('是否退出当前账号？', '退出提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
           type: 'warning'
         })
           .then(() => {
@@ -57,13 +62,13 @@ export default {
       }
     },
     // 重置密码提交
-    async submitPass(e) {
+    async submitHandle(e) {
       const params = {
         password: e
       }
       await postChangePass(params)
       this.$message({
-        message: this.$t('do-success'),
+        message: '操作成功',
         type: 'success'
       })
       this.modalShow = false
@@ -73,13 +78,14 @@ export default {
       removeStorage('userData')
       this.$router.push('/login')
       this.$message({
-        message: this.$t('do-success'),
+        message: '操作成功',
         type: 'success'
       })
     }
   },
   mounted() {
     this.name = getStorage('userData').username
+    this.passRule = rules.passRule
   }
 }
 </script>
@@ -117,6 +123,7 @@ export default {
 }
 .avatar {
   width: 34px;
+  border-radius: 100%;
   display: inline-block;
   vertical-align: middle;
 }

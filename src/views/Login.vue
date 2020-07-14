@@ -4,7 +4,6 @@
     <div class="bg-item" />
     <div class="bg-item" />
     <div class="bg-item" />
-    <lang-header class="lang" />
     <div class="login-box">
       <div class="point-item" />
       <div class="point-item" />
@@ -16,22 +15,22 @@
         ref="loginForm"
         class="login-form"
       >
-        <div class="title" v-text="$t('title')" />
-        <div class="account-login" v-text="$t('account-login')" />
+        <div class="title">云盘</div>
+        <div class="account-login">登录</div>
         <div class="login-line">
           <div class="login-line-active"></div>
         </div>
-        <el-form-item prop="username" :label="$t('username')" class="item">
+        <el-form-item prop="username" label="用户名" class="item">
           <el-input
-            :placeholder="$t('username-placehold')"
+            placeholder="请输入用户名"
             v-model="loginForm.username"
             autocomplete="off"
           />
         </el-form-item>
-        <el-form-item prop="password" :label="$t('password')" class="item">
+        <el-form-item prop="password" label="密码" class="item">
           <el-input
             :type="passShow ? 'text' : 'password'"
-            :placeholder="$t('password-placehold')"
+            placeholder="请输入密码"
             v-model="loginForm.password"
             autocomplete="off"
             @keyup.enter.native="enterSubmit"
@@ -47,58 +46,47 @@
             class="sbmit-btn"
             @click="submitForm('loginForm')"
           >
-            {{ $t('login-submit') }}
+            登录
           </el-button>
         </el-form-item>
       </el-form>
-      <div class="login-bg">
-        <img src="@/assets/imgs/login-bg.png" alt="login" />
-      </div>
+      <div class="login-bg" />
     </div>
   </div>
 </template>
 
 <script>
-import { login, getUserInfo } from '@/api'
-import md5 from 'js-md5'
-import { currency } from '@/utils/currency'
+import { login } from '@/api'
+
 import { setStorage } from '@/utils/storage.js'
 import SvgIcon from '@/components/SvgIcon'
-import LangHeader from '@/components/LangHeader'
+import rules from '@/utils/rule'
 export default {
   components: {
-    SvgIcon,
-    LangHeader
+    SvgIcon
   },
   data() {
     const validatePass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error(this.$t('password-is-required')))
-      } else if (
-        !/^[0-9a-zA-Z]+$/.test(value) ||
-        value.length < 5 ||
-        value.length > 13
-      ) {
-        callback(new Error(this.$t('password-is-wrong')))
+        callback(new Error('请输入密码'))
+      } else if (!this.rule.passRule.test(value)) {
+        callback(new Error('密码格式有误'))
       } else {
         callback()
       }
     }
     const validateName = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error(this.$t('username-is-required')))
-      } else if (
-        !/^[0-9a-zA-Z]+$/.test(value) ||
-        value.length < 3 ||
-        value.length > 30
-      ) {
-        callback(new Error(this.$t('username-is-wrong')))
+        callback(new Error('请输入用户名'))
+      } else if (!this.rule.userRule.test(value)) {
+        callback(new Error('用户名格式有误'))
       } else {
         callback()
       }
     }
     return {
       passShow: false,
+      rule: {},
       loginForm: {
         username: '',
         password: ''
@@ -106,21 +94,11 @@ export default {
       rules: {
         username: [
           {
-            required: true,
-            message: this.$t('username-is-required'),
-            trigger: 'blur'
-          },
-          {
             validator: validateName,
             trigger: 'blur'
           }
         ],
         password: [
-          {
-            required: true,
-            message: this.$t('password-is-required'),
-            trigger: 'blur'
-          },
           {
             validator: validatePass,
             trigger: 'blur'
@@ -153,23 +131,23 @@ export default {
     async login() {
       const params = {
         username: this.loginForm.username,
-        password: md5(this.loginForm.password)
+        password: this.loginForm.password
       }
       const res = await login(params)
       setStorage('userData', res.data)
-      const info = await getUserInfo()
-      res.data.unit = currency(info.data.agentInfo.priceUnit)
-      setStorage('userData', res.data)
       this.$message({
-        message: this.$t('do-success'),
+        message: '操作成功',
         type: 'success'
       })
       let timer = setTimeout(() => {
-        this.$router.push('/home')
+        this.$router.push('/manage')
         clearTimeout(timer)
         timer = null
       }, 500)
     }
+  },
+  mounted() {
+    this.rule = rules
   }
 }
 </script>
@@ -252,11 +230,7 @@ export default {
     height: 500px;
     .point-item {
       position: absolute;
-      background: linear-gradient(
-        150deg,
-        rgba(255, 201, 77, 1) 0%,
-        rgba(255, 132, 19, 1) 100%
-      );
+      background: linear-gradient(150deg, #66b1ff 0%, #409eff 100%);
       border-radius: 100%;
       &:nth-child(1) {
         top: 22px;
@@ -275,15 +249,14 @@ export default {
         right: 0;
         width: 63px;
         height: 63px;
-        background: #f5d5a4;
+        background: #66b1ff;
       }
     }
     .login-bg {
       width: 480px;
       height: 500px;
-      img {
-        width: 100%;
-      }
+      background: url('../assets/imgs/login-bg.png') no-repeat;
+      background-size: 480px 500px;
     }
     .login-form {
       width: 400px;
@@ -319,7 +292,7 @@ export default {
           left: 1px;
           width: 48px;
           height: 4px;
-          background: rgb(255, 132, 19);
+          background: #409eff;
           border-radius: 2px;
         }
       }

@@ -1,67 +1,59 @@
 <template>
   <div class="manage">
-    <div class="buy-record" v-text="$t('account-manage')"></div>
-    <div class="buy-record-line">
-      <div class="buy-record-line-active"></div>
-    </div>
-    <manage-search
-      :select="select"
-      :usernameArr="usernameArr"
-      @searchHandle="searchHandle"
-      @rechargeHandle="rechargeHandle"
-      @freezeHandle="freezeHandle"
-      @resetPass="resetPass"
-    />
+    <manage-search @searchHandle="searchHandle" />
     <list-table
       :tableData="tableData"
-      @selectHandle="selectHandle"
-      @rechargeHandle="rechargeHandle"
-      @freezeHandle="freezeHandle"
+      @setZoom="setZoom"
       @resetPass="resetPass"
     />
     <pagination-bar
       :pagination="pagination"
       @changePagination="changePagination"
     />
-    <pass-modal
-      @submitPass="submitPass"
+    <input-modal
+      @submitHandle="submitPass"
       :show.sync="passModalShow"
       v-if="passModalShow"
-      :title="$t('reset-pass')"
+      title="重置密码"
+      label="新密码"
+      placeholder="请输入新密码"
+      :rule="rule.passRule"
     />
-    <buy-modal
-      :show.sync="buyModalShow"
-      v-if="buyModalShow"
-      :title="$t('buy-account-second')"
-      :usernameArr="usernameArr"
+    <input-modal
+      @submitHandle="submitZoom"
+      :show.sync="zoomModalShow"
+      v-if="zoomModalShow"
+      title="设置空间"
+      label="空间大小"
+      placeholder="请输入空间大小(MB)"
+      number="number"
+      :rule="rule.zoomRule"
     />
   </div>
 </template>
 <script>
-import PassModal from '@/components/modal/PassModal.vue'
+import InputModal from '@/components/modal/InputModal.vue'
 import ManageSearch from '@/components/manage/ManageSearch'
 import ListTable from '@/components/manage/ListTable'
 import PaginationBar from '@/components/PaginationBar'
-import BuyModal from '@/components/modal/BuyModal'
-import { getList, postResetPass, postLocked } from '@/api'
+import { getList, postResetPass, postSetZoom } from '@/api'
 import { dataFormat } from '@/utils/time'
+import rules from '@/utils/rule'
 export default {
   name: 'Manage',
   components: {
     ListTable,
     ManageSearch,
     PaginationBar,
-    PassModal,
-    BuyModal
+    InputModal
   },
   data() {
     return {
-      buyModalShow: false,
       passModalShow: false,
+      zoomModalShow: false,
+      rule: {},
       tableData: [],
-      select: [],
-      passIds: [],
-      usernameArr: [],
+      id: '',
       pagination: {
         total: 0,
         page: 1,
@@ -77,86 +69,87 @@ export default {
   },
   methods: {
     async getList() {
-      const pagination = {
+      const params = {
         page: this.pagination.page,
-        perPage: this.pagination.perPage
+        perPage: this.pagination.perPage,
+        searchParam: []
       }
-      const search = {}
       if (this.params.username) {
-        search.username = this.params.username
+        params.searchParam.push({
+          searchColumn: 'username',
+          searchOperator: 'like',
+          searchValue: this.params.username
+        })
       }
       if (this.params.beginTime) {
-        search.beginTime = this.params.beginTime
+        params.searchParam.push({
+          searchColumn: 'createAt',
+          searchOperator: '<=',
+          searchValue: this.params.beginTime
+        })
       }
       if (this.params.endTime) {
-        search.endTime = this.params.endTime
-      }
-      if (this.params.endTime || this.params.beginTime) {
-        search.timeCategory = this.params.timeCategory
-      }
-      const params = Object.assign(pagination, search)
-      const res = await getList(params)
-      this.tableData = res.data.data.map(item => {
-        item.createAt = dataFormat(item.createAt)
-        item.userVip.forEach(item => {
-          item.vipEndTime = dataFormat(item.vipEndTime)
+        params.searchParam.push({
+          searchColumn: 'createAt',
+          searchOperator: '>=',
+          searchValue: this.params.endTime
         })
+      }
+
+      const res = await getList(params)
+      console.log(res)
+      this.tableData = res.data.data.map(item => {
+        item.createAt = item.createAt ? dataFormat(item.createAt) : '-'
         return item
       })
       this.pagination.total = res.data.total
     },
     // 搜索
     searchHandle(e) {
-      this.select = []
       this.pagination.page = 1
       this.params = e
       this.getList()
     },
     // 分页变换
     changePagination(e) {
-      this.select = []
       this.pagination.page = e.page
       this.pagination.perPage = e.perPage
       this.getList()
     },
-    // 选中变化
-    selectHandle(e, user) {
-      this.select = e
-      this.usernameArr = user
+    // 设置空间
+    setZoom(e) {
+      this.id = e
+      this.zoomModalShow = true
     },
 
-    // 续购
-    rechargeHandle(e) {
-      this.usernameArr = e
-      this.buyModalShow = true
-    },
-    // 冻结
-    async freezeHandle(id, status) {
+    // 设置空间提交
+
+    async submitZoom(e) {
       const params = {
-        userIds: id,
-        status: status
+        id: this.id,
+        space: e
       }
-      await postLocked(params)
-      await this.getList()
+      await postSetZoom(params)
       this.$message({
-        message: this.$t('do-success'),
+        message: '操作成功',
         type: 'success'
       })
+      this.zoomModalShow = false
     },
     // 重置密码
     resetPass(e) {
-      this.passIds = e
+      this.id = e
       this.passModalShow = true
     },
     // 重置密码提交
     async submitPass(e) {
       const params = {
-        userIds: this.passIds,
+        id: this.id,
         password: e
       }
       await postResetPass(params)
       this.$message({
-        message: this.$t('do-success'),
+        message: '操作成功',
         type: 'success'
       })
       this.passModalShow = false
@@ -164,6 +157,7 @@ export default {
   },
   mounted() {
     this.getList()
+    this.rule = rules
   }
 }
 </script>
@@ -189,7 +183,7 @@ export default {
       left: 1px;
       width: 48px;
       height: 4px;
-      background: rgb(255, 132, 19);
+      background: #409eff;
       border-radius: 2px;
     }
   }

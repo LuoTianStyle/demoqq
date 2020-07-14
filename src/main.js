@@ -8,7 +8,6 @@ import '../theme/index.css'
 import 'normalize.css'
 import './assets/icons'
 import '@/assets/styles/variable.less'
-import i18n from './i18n/i18n'
 import VueWechatTitle from 'vue-wechat-title'
 Vue.use(VueWechatTitle)
 Vue.config.productionTip = false
@@ -20,10 +19,8 @@ router.beforeEach((to, _, next) => {
     next()
   }
 })
-
 new Vue({
   router,
   store,
-  i18n,
   render: h => h(App)
 }).$mount('#app')

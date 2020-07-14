@@ -14,7 +14,7 @@ module.exports = {
   productionSourceMap: false,
   chainWebpack: config => {
     config.plugin('html').tap(args => {
-      args[0].title = 'Overseas agent background management system'
+      args[0].title = '云盘'
       return args
     })
     config.resolve.alias
@@ -33,27 +33,12 @@ module.exports = {
       .end()
       .include.add(path.join(__dirname, 'src/assets/icons'))
       .end()
-    config.module
-      .rule('i18n')
-      .resourceQuery(/blockType=i18n/)
-      .type('javascript/auto')
-      .use('i18n')
-      .loader('@kazupon/vue-i18n-loader')
-      .end()
   },
 
-  pluginOptions: {
-    i18n: {
-      locale: 'en',
-      fallbackLocale: 'en',
-      localeDir: 'locales',
-      enableInSFC: true
-    }
-  },
   devServer: {
     proxy: {
       '/api_back': {
-        target: 'http://britainagent.nobook.cc',
+        target: 'http://pan.ciyun.vip',
         changeOrigin: true,
         ws: true,
         pathRewrite: {

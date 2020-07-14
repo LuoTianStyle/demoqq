@@ -1,85 +1,35 @@
 <template>
   <div class="search">
     <el-input
-      :placeholder="$t('search-input-placehold')"
+      placeholder="请输入用户名"
       clearable
       v-model="username"
       class="search-content"
     >
       <i slot="prefix" class="el-input__icon el-icon-search"></i>
     </el-input>
-    <el-select v-model="timeCategory" class="select">
-      <el-option :label="$t('create-time')" value="0" />
-      <el-option :label="$t('expire-time1')" value="1" />
-    </el-select>
     <el-date-picker
       v-model="beginTime"
       type="date"
-      :placeholder="$t('search-time-start')"
+      placeholder="开始时间"
       class="data-item"
       value-format="timestamp"
     />
     <el-date-picker
       v-model="endTime"
       type="date"
-      :placeholder="$t('search-time-end')"
+      placeholder="结束时间"
       class="data-item"
       value-format="timestamp"
     />
-    <el-button
-      class="search-btn"
-      size="medium"
-      v-text="$t('search-btn')"
-      @click="searchHandle"
-    />
-    <div class="put">
-      <el-button
-        class="btn-item"
-        type="primary"
-        size="medium"
-        :disabled="select.length > 0 ? false : true"
-        @click="rechargeHandle"
-      >
-        <svg-icon v-if="select.length > 0" icon-class="recharge" class="icon" />
-        <svg-icon v-else icon-class="recharge-d" class="icon" />
-        {{ $t('recharge') }}
-      </el-button>
-      <el-button
-        class="btn-item"
-        type="primary"
-        size="medium"
-        :disabled="select.length > 0 ? false : true"
-        @click="freezeHandle"
-      >
-        <svg-icon v-if="select.length > 0" icon-class="freeze" class="icon" />
-        <svg-icon v-else icon-class="freeze-d" class="icon" />
-        {{ $t('freeze') }}
-      </el-button>
-      <el-button
-        class="btn-item"
-        :disabled="select.length > 0 ? false : true"
-        type="primary"
-        size="medium"
-        @click="resetPass"
-      >
-        <svg-icon
-          v-if="select.length > 0"
-          icon-class="reset-pass"
-          class="icon"
-        />
-        <svg-icon v-else icon-class="reset-pass-d" class="icon" />
-        {{ $t('reset-pass') }}
-      </el-button>
-    </div>
+    <el-button type="primary" size="medium" @click="searchHandle">
+      搜索
+    </el-button>
   </div>
 </template>
 <script>
 export default {
-  name: 'HomeSearcch',
-  props: {
-    select: Array,
-    usernameArr: Array
-  },
+  name: 'ManageSearcch',
   data() {
     return {
       error: false,
@@ -104,7 +54,7 @@ export default {
     searchHandle() {
       if (this.error) {
         this.$message({
-          message: this.$t('username-is-wrong1'),
+          message: '用户名输入过长',
           type: 'warning'
         })
         return
@@ -124,26 +74,6 @@ export default {
         )
       }
       this.$emit('searchHandle', param)
-    },
-    // 续购
-    rechargeHandle() {
-      this.$emit('rechargeHandle', this.usernameArr)
-    },
-    // 封号
-    freezeHandle() {
-      this.$confirm(this.$t('freeze-tip-content'), this.$t('freeze-tip'), {
-        confirmButtonText: this.$t('sure'),
-        cancelButtonText: this.$t('cancel'),
-        type: 'warning'
-      })
-        .then(() => {
-          this.$emit('freezeHandle', this.select, 1)
-        })
-        .catch(() => {})
-    },
-    // 重置密码
-    resetPass() {
-      this.$emit('resetPass', this.select)
     }
   }
 }
@@ -193,12 +123,6 @@ export default {
     }
   }
 
-  .search-btn {
-    color: #ff8413;
-    border-color: transparent;
-    width: 100px;
-    border-radius: 8px;
-  }
   .btn-item {
     border-radius: 8px;
     height: 36px;

@@ -1,4 +1,4 @@
 export default {
-  cc: 'http://britainagent.nobook.cc',
-  com: 'http://britainagent.nobook.cc'
+  cc: 'http://pan.ciyun.vip',
+  com: 'http://pan.ciyun.vip'
 }

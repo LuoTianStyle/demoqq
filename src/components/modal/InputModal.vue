@@ -13,11 +13,19 @@
       <div class="buy-record-line">
         <div class="buy-record-line-active"></div>
       </div>
-      <el-form-item :label="$t('new-pass')" prop="pass" class="item">
+      <el-form-item :label="label" prop="input" class="item">
         <el-input
-          :placeholder="$t('password-placehold')"
+          v-if="number"
+          :placeholder="placeholder"
+          v-model.number="form.input"
+          autocomplete="off"
+        />
+
+        <el-input
+          v-else
+          :placeholder="placeholder"
           :type="passShow ? 'text' : 'password'"
-          v-model="form.pass"
+          v-model="form.input"
           autocomplete="off"
         >
           <i slot="suffix" class="pass-icon" @click="showPass">
@@ -25,17 +33,10 @@
         ></el-input>
       </el-form-item>
       <el-form-item class="submit">
-        <el-button
-          @click="cancelModal"
-          v-text="$t('cancel')"
-          class="btn cancle"
-        />
-        <el-button
-          type="primary"
-          @click="submitForm('form')"
-          v-text="$t('sure')"
-          class="btn"
-        />
+        <el-button @click="cancelModal" class="btn cancle">取消</el-button>
+        <el-button type="primary" @click="submitForm('form')" class="btn">
+          确定
+        </el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
@@ -50,18 +51,18 @@ export default {
   props: {
     show: Boolean,
     title: String,
-    passIds: Array
+    label: String,
+    placeholder: String,
+    number: String,
+    passIds: Array,
+    rule: RegExp
   },
   data() {
-    const validatePass = (rule, value, callback) => {
+    const validateInput = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error(this.$t('password-is-required')))
-      } else if (
-        !/^[0-9a-zA-Z]+$/.test(value) ||
-        value.length < 5 ||
-        value.length > 13
-      ) {
-        callback(new Error(this.$t('password-is-wrong')))
+        callback(new Error(`请输入${this.title}`))
+      } else if (!this.rule.test(value)) {
+        callback(new Error(`${this.title}格式有误`))
       } else {
         callback()
       }
@@ -69,20 +70,31 @@ export default {
     return {
       passShow: false,
       form: {
-        pass: ''
+        input: ''
       },
       rules: {
-        pass: [
+        input: [
           {
-            validator: validatePass,
+            validator: validateInput,
             trigger: 'blur'
           }
         ]
       }
     }
   },
+  watch: {
+    'form.input': {
+      handler() {
+        if (this.title === '设置空间') {
+          if (typeof this.form.input !== 'number') {
+            this.form.input = 1
+          }
+        }
+      }
+    }
+  },
   methods: {
-    // 密码显示隐藏
+    // 显示隐藏
     showPass() {
       this.passShow = !this.passShow
     },
@@ -92,7 +104,7 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$emit('submitPass', this.form.pass)
+          this.$emit('submitHandle', this.form.input)
         } else {
           return false
         }
@@ -187,7 +199,7 @@ export default {
       left: 1px;
       width: 48px;
       height: 4px;
-      background: rgb(255, 132, 19);
+      background: #409eff;
       border-radius: 2px;
     }
   }

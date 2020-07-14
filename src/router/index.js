@@ -6,65 +6,29 @@ const routes = [
     path: '/login',
     name: 'Login',
     meta: {
-      name: 'login'
+      name: '登录'
     },
     component: () => import('../views/Login.vue')
   },
   {
     path: '/',
-    redirect: '/home',
+    redirect: '/manage',
     component: () => import('../views/Index.vue'),
     children: [
-      {
-        path: '/home',
-        name: 'Home',
-        icon: 'home',
-        meta: {
-          name: 'home'
-        },
-        component: () => import('../views/Home.vue')
-      },
       {
         path: '/manage',
         name: 'Manage',
         icon: 'account',
         meta: {
-          name: 'account-manage'
+          name: '账号管理'
         },
         component: () => import('../views/Manage.vue')
-      },
-      {
-        path: '/list/:id/:category',
-        name: 'List',
-        meta: {
-          name: 'account-List'
-        },
-        isShow: false,
-        component: () => import('../views/List.vue')
-      },
-      {
-        path: '/result/:orderId/:status/:category',
-        name: 'Result',
-        meta: {
-          name: 'result-success'
-        },
-        isShow: false,
-        component: () => import('../views/Result.vue')
-      },
-      {
-        path: '/result/:orderSn/:status',
-        name: 'Result',
-        meta: {
-          name: 'result-failure'
-        },
-        isShow: false,
-        component: () => import('../views/Result.vue')
       }
     ]
   },
   {
     path: '*',
-    redirect: '/home'
+    redirect: '/manage'
   }
 ]
 
