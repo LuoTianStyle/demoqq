@@ -1,0 +1,24 @@
+#live2d {
+  display: block;
+  transform: opacity 1s;
+  &.hide {
+    opacity: 0;
+  }
+}
+#live2d-box {
+  width: 280px;
+  height: 250px;
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 98;
+  user-select: none;
+  .live2d-loading {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 280px;
+    height: 250px;
+    z-index: 9;
+  }
+}

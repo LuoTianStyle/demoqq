@@ -31,3 +31,19 @@ export const getSite = params => {
 export const postSiteEdit = params => {
   return get(`api_back/site/edit`, params)
 }
+// 更换模型
+export const changeModel = ({ modelType = 'rand', ...params }) => {
+  return this.get(`api_backs/api/live2d/${modelType}/model`, params)
+}
+
+// 更换服装
+export const changeTextures = ({ texturesType = 'switch', ...params }) => {
+  return this.get(`api_backs/api/live2d/${texturesType}/textures`, params)
+}
+
+// 加载模型
+export const loadLive2d = (modelId, texturesId) => {
+  return this.get(
+    `api_backs/api/live2d/model/${modelId}/textures/${texturesId}`
+  )
+}

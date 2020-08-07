@@ -8,6 +8,7 @@ import '../theme/index.css'
 import 'normalize.css'
 import './assets/icons'
 import '@/assets/styles/variable.less'
+import '@/assets/live2d/live2d.js'
 import VueWechatTitle from 'vue-wechat-title'
 Vue.use(VueWechatTitle)
 Vue.config.productionTip = false

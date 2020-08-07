@@ -44,6 +44,14 @@ module.exports = {
         pathRewrite: {
           '^/api_back': ''
         }
+      },
+      '/api_backs': {
+        target: 'http://dzblog.cn',
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/api_backs': ''
+        }
       }
     }
   }
